@@ -4,6 +4,7 @@ const { check, validationResult } = require("express-validator");
 
 //other files
 const Calendar = require("./../../models/Calendar/Calendar");
+const CalendarEvent = require("./../../models/Calendar/CalendarEvent");
 const auth = require("./../../middleware/auth");
 
 const router = new express.Router();
@@ -70,7 +71,6 @@ router.post(
     check("title", "Please enter a title").not().isEmpty(),
     check("start", "Please enter a start time").not().isEmpty(),
     check("end", "Please enter an end time").not().isEmpty(),
-    check("from", "Please specify who created the event").not().isEmpty(),
     check("calendarID", "Please specify the calendarID").not().isEmpty(),
     check("to", "Please specify who the event is allocated to.")
       .not()
@@ -85,7 +85,46 @@ router.post(
       return res.status(400).send({ errors: errors.array });
     }
 
-    //TODO: insert new calendar event into database
+    const {
+      start,
+      end,
+      isWholeDay,
+      wholeDayDate,
+      title,
+      notes,
+      to,
+      calendarID,
+    } = req.body;
+
+    const from = req.user._id;
+
+    console.log(req.body);
+    try {
+      const newCalendarEvent = new CalendarEvent({
+        start,
+        end,
+        isWholeDay,
+        wholeDayDate,
+        title,
+        notes,
+        from,
+        to,
+        calendarID,
+      });
+
+      res.status(201).send(newCalendarEvent);
+      await newCalendarEvent.save();
+    } catch (error) {
+      console.log(error.message);
+      res.status(500).send({
+        errors: [
+          {
+            msg:
+              "Sorry, that should not have happened. Please try again later.",
+          },
+        ],
+      });
+    }
   }
 );
 
