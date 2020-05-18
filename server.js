@@ -13,6 +13,7 @@ app.use(express.json({ extended: false }));
 app.use("/api/users", require("./server/routes/api/users"));
 app.use("/api/auth", require("./server/routes/api/auth"));
 app.use("/api/calendar", require("./server/routes/api/calendar"));
+app.use("/api/mail", require("./server/routes/api/mail"));
 
 const PORT = process.env.PORT || 5000;
 
