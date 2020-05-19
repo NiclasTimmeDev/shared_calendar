@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 //other project files
-//const auth = require("./../../middleware/auth");
+const auth = require("./../../middleware/auth");
 const User = require("./../../models/User");
 const config = require("./../../config/config");
 
@@ -15,9 +15,12 @@ const config = require("./../../config/config");
 /* Find a user by id*/
 /* The id is put in req.user by the auth middleware*/
 //==========================
-router.get("/", async () => {
+router.get("/", auth, async () => {
   try {
     const user = await User.findById(req.user._id).select("-password");
+    if (!user) {
+      return res.status(404).send({ errors: [{ msg: "User not found." }] });
+    }
     res.status(200).send(user);
   } catch (error) {
     console.log(error.message);

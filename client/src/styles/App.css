@@ -1,0 +1,134 @@
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%; /*Now: 10px = 1rem*/
+}
+
+/* Vars: */
+:root {
+  --mainFont: sans-serif;
+  --borderRadius: 0.5rem;
+  --borderRadiusLarge: 1.5rem;
+
+  --primaryBackground: #fff;
+  --primaryAccent: #73fbd3;
+  --secondaryAccent: #31afd4;
+  --primaryContrast: #2f4858;
+  --secondaryContrast: #546d79;
+  --tertiaryContrast: #64e9ee;
+}
+
+body {
+  font-family: var(--mainFont);
+  font-size: 1.8rem;
+}
+
+p {
+  line-height: 2.7rem;
+}
+
+/*==========================
+GENERAL UI
+==========================*/
+.primary-contrast-background {
+  background-color: var(--primaryContrast);
+}
+
+.primary-contrast-background * {
+  color: #fff;
+}
+
+.rounded-edges {
+  border-radius: var(--borderRadiusLarge);
+}
+
+.full-height {
+  height: 100vh;
+}
+
+/*=================== 
+HEADERS
+===================*/
+h1 {
+  font-size: 4rem;
+  padding: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.section-header {
+  font-size: 4rem;
+  padding: 1rem 0;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+/*==========================
+BUTTONS
+===========================*/
+.btn {
+  padding: 0.5rem;
+  margin: 1rem 0;
+  cursor: pointer;
+  font-size: 2.2rem;
+  border-radius: var(--borderRadius);
+  padding: 0.5rem 2rem;
+  text-align: center;
+  text-transform: uppercase;
+  border: none;
+  font-weight: bold;
+}
+
+.btn:focus {
+  outline: none;
+}
+
+.btn-primary {
+  background-color: var(--primaryAccent);
+  color: var(--secondaryContrast);
+  transition: all 0.3s;
+}
+
+.btn-primary:hover {
+  filter: brightness(80%);
+  transition: all 0.3s;
+}
+
+/*================
+FORMS 
+================*/
+form {
+  display: block;
+  width: 100%;
+}
+
+.form-only {
+  padding: 3rem 0;
+}
+
+input {
+  display: block;
+  padding: 1rem;
+  width: 100%;
+  background-color: #fff;
+  border: 0.1rem solid lightgray;
+  border-radius: var(--borderRadius);
+  margin-bottom: 1rem;
+  color: #000 !important;
+}
+
+input:focus {
+  outline: none;
+}
+
+.form-error {
+  color: red;
+  display: block;
+}
