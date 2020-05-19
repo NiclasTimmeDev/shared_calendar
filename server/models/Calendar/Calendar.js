@@ -14,6 +14,9 @@ const calendarSchema = new mongoose.Schema({
       },
     },
   ],
+  openInvitation: {
+    type: String,
+  },
 });
 
 const Calendar = mongoose.model("Calendar", calendarSchema);
