@@ -11,6 +11,7 @@ import { Provider } from "react-redux";
 
 //components
 import Login from "./components/auth/Login";
+import Register from "./components/auth/Register";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Fragment>
           <Switch>
             <Route path="/login" component={Login} exact />
+            <Route path="/register" component={Register} exact />
           </Switch>
         </Fragment>
       </Router>

@@ -5,6 +5,7 @@ const initState = {
   isAuthenticated: false,
   loading: true,
   user: null,
+  authError: "",
 };
 
 const auth = (state = initState, action) => {
@@ -15,14 +16,31 @@ const auth = (state = initState, action) => {
         isAuthenticated: true,
         loading: false,
         user: action.payload,
+        authError: "",
       };
     case types.AUTH_SUCCESS:
       return {
         ...state,
         isAuthenticated: true,
         loading: false,
+        authError: "",
       };
-    case types.AUTH_ERROR:
+    case types.LOGIN_ERROR:
+      return {
+        ...state,
+        token: null,
+        loading: true,
+        isAuthenticated: false,
+        authError: "Invalid credentials. Please try again.",
+      };
+    case types.REGISTER_ERROR:
+      return {
+        ...state,
+        token: null,
+        loading: true,
+        isAuthenticated: false,
+        authError: "Sorry, this email address is already taken.",
+      };
     case types.LOGOUT:
     case types.ACCOUNT_DELETED:
       localStorage.removeItem("token");
@@ -31,6 +49,7 @@ const auth = (state = initState, action) => {
         token: null,
         loading: true,
         isAuthenticated: false,
+        authError: "",
       };
     default:
       return state;

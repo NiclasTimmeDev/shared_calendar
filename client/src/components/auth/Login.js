@@ -12,34 +12,29 @@ const Login = (props) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    emailError: "",
-    passwordError: "",
+    error: "",
   });
 
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-      emailError: "",
-      passwordError: "",
+      error: "",
     });
   };
 
   const submit = (e) => {
     e.preventDefault();
     const isEmail = validator.isEmail(formData.email);
-    if (!isEmail) {
+
+    if (!isEmail || formData.password === "") {
       setFormData({
         ...formData,
-        emailError: "Please enter a valid email address",
+        error: "Invalid credentials.",
       });
     }
-    if (formData.password === "") {
-      setFormData({
-        passwordError: "Please enter a password",
-      });
-    }
-    if (formData.emailError === "" && formData.passwordError === "") {
+
+    if (formData.error === "") {
       props.login(formData.email, formData.password);
     }
   };
@@ -70,7 +65,9 @@ const Login = (props) => {
                 id="email"
                 value={formData.email}
               />
-              <small className="form-error">{formData.emailError} </small>
+              <small className="form-error">
+                {formData.error === "" ? props.authError : formData.error}{" "}
+              </small>
               <input
                 onChange={(e) => {
                   handleInputChange(e);
@@ -81,7 +78,9 @@ const Login = (props) => {
                 id="password"
                 value={formData.password}
               />
-              <small className="form-error">{formData.passwordError} </small>
+              <small className="form-error">
+                {formData.error === "" ? props.authError : formData.error}{" "}
+              </small>
               <button type="submit" className="btn btn-primary">
                 Login
               </button>
@@ -95,6 +94,7 @@ const Login = (props) => {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
+  authError: state.auth.authError,
 });
 
 export default connect(mapStateToProps, { login })(Login);

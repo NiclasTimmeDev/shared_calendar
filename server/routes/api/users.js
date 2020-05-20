@@ -39,9 +39,8 @@ router.post(
 
       //send error if e-mail is already taken
       if (user) {
-        console.log(user);
         return res
-          .status(400)
+          .status(401)
           .send({ errors: [{ msg: "This E-mail is already taken." }] });
       }
 
@@ -67,16 +66,18 @@ router.post(
         },
       };
 
-      //create token
       jwt.sign(
         tokenPayload,
         config.tokenSecret,
         { expiresIn: "360000" },
         (err, token) => {
           if (err) {
-            return res.status(400).send("Sorry, server error");
+            return res
+              .status(400)
+              .send({ errors: [{ msg: "Sorry, something went wrong" }] });
           }
-          res.status(201).send(token);
+
+          res.status(201).send({ token });
         }
       );
 
