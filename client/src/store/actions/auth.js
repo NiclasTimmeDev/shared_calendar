@@ -4,6 +4,7 @@ import * as types from "./../actionTypes";
 import setAlert from "./alert";
 
 export const loadUser = () => {
+  console.log("load user");
   return async (dispatch) => {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
@@ -40,7 +41,7 @@ export const login = (email, password) => {
       }
       localStorage.setItem("token", res.data.token);
       dispatch({
-        type: types.USER_LOADED,
+        type: types.AUTH_SUCCESS,
       });
       dispatch(loadUser());
     } catch (error) {

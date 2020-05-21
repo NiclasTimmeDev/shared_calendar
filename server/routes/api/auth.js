@@ -15,7 +15,7 @@ const config = require("./../../config/config");
 /* Find a user by id*/
 /* The id is put in req.user by the auth middleware*/
 //==========================
-router.get("/", auth, async () => {
+router.get("/", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user._id).select("-password");
     if (!user) {
@@ -64,7 +64,7 @@ router.post(
       jwt.sign(
         tokenPayload,
         config.tokenSecret,
-        { expiresIn: "360000" },
+        { expiresIn: "216000" },
         (err, token) => {
           if (err) {
             return res

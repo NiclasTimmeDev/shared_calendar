@@ -40,7 +40,7 @@ const Login = (props) => {
   };
 
   if (props.isAuthenticated) {
-    return <Redirect to="/" />;
+    return <Redirect to="/calendar" />;
   }
 
   return (

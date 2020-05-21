@@ -302,9 +302,9 @@ router.get("/events/find/:event_id", auth, async (req, res) => {
 });
 
 //=====================================
-/* Find members of a calendar */
+/* Find calendar */
 //=====================================
-router.get("/members/find", auth, async (req, res) => {
+router.get("/find", auth, async (req, res) => {
   try {
     const calendar = await Calendar.findOne({
       "members.userID": req.user._id,
@@ -316,7 +316,7 @@ router.get("/members/find", auth, async (req, res) => {
         .send({ errors: [{ msg: "You are not a member of a calendar." }] });
     }
 
-    res.status(200).send(calendar.members);
+    res.status(200).send(calendar);
   } catch (error) {
     console.log(error.message);
     res.status(500).send({
@@ -387,13 +387,12 @@ router.delete("/delete", auth, async (req, res) => {
     }
 
     await CalendarEvent.deleteMany({
-      calendarID: calendar._id
-    })
-
-    await Calendar.deleteOne({
-      "members.userID": req.user._id
+      calendarID: calendar._id,
     });
 
+    await Calendar.deleteOne({
+      "members.userID": req.user._id,
+    });
 
     res.status(200).send("Calendar deleted successfully.");
   } catch (error) {
@@ -486,44 +485,46 @@ router.post(
 
     //3:
     const calendar = await Calendar.findOne({
-      "members.userID": req.user._id
+      "members.userID": req.user._id,
     });
 
     //4:
     if (!calendar) {
-      return res.status(404).send({ errors: [{ msg: "Calendar not found." }] })
+      return res.status(404).send({ errors: [{ msg: "Calendar not found." }] });
     }
 
     //5:
     if (calendar.openInvitation) {
       if (calendar.openInvitation !== "") {
-        return res.status(400).send({ errors: [{ msg: "There is already someone else invited to this calendar." }] })
+        return res.status(400).send({
+          errors: [
+            {
+              msg: "There is already someone else invited to this calendar.",
+            },
+          ],
+        });
       }
     }
 
     //6:
     const tokenPayload = {
-      email: { email: req.body.email }
-    }
-    jwt.sign(
-      tokenPayload,
-      config.tokenSecret,
-      (err, token) => {
-        if (err) {
-          return res.status(400).send("Sorry, server error");
-        }
-        calendar.openInvitation = token
-
-        //7:
-        const msg = {
-          to: req.body.email,
-          from: "niclas.timm@gmx.de",
-          subject: `${user.name} invited you to shared Calendar`,
-          html: `<strong>${user.name} invited to you to share a calendar or shared calendar.</strong><p>Click the following link to accept the invitation:</p><div><a href='http://localhost:3000/invitation/accept/${token}'>Accept invitation</a></div>`,
-        };
-        sgMail.send(msg);
+      email: { email: req.body.email },
+    };
+    jwt.sign(tokenPayload, config.tokenSecret, (err, token) => {
+      if (err) {
+        return res.status(400).send("Sorry, server error");
       }
-    )
+      calendar.openInvitation = token;
+
+      //7:
+      const msg = {
+        to: req.body.email,
+        from: "niclas.timm@gmx.de",
+        subject: `${user.name} invited you to shared Calendar`,
+        html: `<strong>${user.name} invited to you to share a calendar or shared calendar.</strong><p>Click the following link to accept the invitation:</p><div><a href='http://localhost:3000/invitation/accept/${token}'>Accept invitation</a></div>`,
+      };
+      sgMail.send(msg);
+    });
 
     res.status(200).send("Invitation sent");
 
@@ -552,25 +553,27 @@ router.post("/invitation/accept/:token", auth, async (req, res) => {
 
     //2:
     if (!user) {
-      return res.status(404).send({ errors: [{ msg: "User not found." }] })
+      return res.status(404).send({ errors: [{ msg: "User not found." }] });
     }
 
     //3:
     const calendar = await Calendar.findOne({
-      openInvitation: token
+      openInvitation: token,
     });
 
     //4:
     if (!calendar) {
-      return res.status(404).send({ errors: [{ msg: "Calendar not found." }] })
+      return res.status(404).send({ errors: [{ msg: "Calendar not found." }] });
     }
 
     //5:
-    const userIsNotAlreadyMember = calendar.members.every(member => {
+    const userIsNotAlreadyMember = calendar.members.every((member) => {
       return member.userID.toString() !== req.user._id.toString();
-    })
+    });
     if (!userIsNotAlreadyMember) {
-      return res.status(400).send({ errors: [{ msg: "You are already a member of this calendar." }] })
+      return res.status(400).send({
+        errors: [{ msg: "You are already a member of this calendar." }],
+      });
     }
 
     //6:
@@ -579,11 +582,13 @@ router.post("/invitation/accept/:token", auth, async (req, res) => {
 
     //7:
     await calendar.save();
-    res.status(200).send(calendar)
+    res.status(200).send(calendar);
   } catch (error) {
     console.log(error.message);
-    res.status(500).send({ errors: [{ msg: "Sorry, something went wrong. Please try again later." }] })
+    res.status(500).send({
+      errors: [{ msg: "Sorry, something went wrong. Please try again later." }],
+    });
   }
-})
+});
 
 module.exports = router;

@@ -29,7 +29,7 @@ const auth = (state = initState, action) => {
       return {
         ...state,
         token: null,
-        loading: true,
+        loading: false,
         isAuthenticated: false,
         authError: "Invalid credentials. Please try again.",
       };
@@ -37,7 +37,7 @@ const auth = (state = initState, action) => {
       return {
         ...state,
         token: null,
-        loading: true,
+        loading: false,
         isAuthenticated: false,
         authError: "Sorry, this email address is already taken.",
       };
@@ -47,7 +47,7 @@ const auth = (state = initState, action) => {
       return {
         ...state,
         token: null,
-        loading: true,
+        loading: false,
         isAuthenticated: false,
         authError: "",
       };
