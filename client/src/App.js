@@ -14,6 +14,8 @@ import { loadUser } from "./store/actions/auth";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import CalendarDashboard from "./components/calendar/CalendarDashboard";
+import PrivateRoute from "./components/Routing/PrivateRoute";
+import CreateEvent from "./components/calendarEvent/CreateEvent";
 
 //utils
 import setAuthToken from "./utils/setAuthToken";
@@ -27,10 +29,15 @@ function App() {
     <Provider store={store}>
       <Router>
         <Fragment>
+          <CreateEvent />
           <Switch>
             <Route path="/login" component={Login} exact />
             <Route path="/register" component={Register} exact />
-            <Route path="/calendar" component={CalendarDashboard} exact />
+            <PrivateRoute
+              path="/calendar"
+              component={CalendarDashboard}
+              exact
+            />
           </Switch>
         </Fragment>
       </Router>

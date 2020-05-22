@@ -6,6 +6,7 @@ const initState = {
   events: [],
   loading: true,
   date: new Date(),
+  monthDates: [],
 };
 
 const calendar = (state = initState, action) => {
@@ -28,6 +29,16 @@ const calendar = (state = initState, action) => {
       return {
         ...state,
         date: action.payload,
+      };
+    case types.LOAD_MONTH_DATES:
+      return {
+        ...state,
+        monthDates: action.payload,
+      };
+    case types.EVENTS_LOADED:
+      return {
+        ...state,
+        events: action.payload,
       };
     default:
       return state;

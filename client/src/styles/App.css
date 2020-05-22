@@ -11,9 +11,9 @@ html {
   font-size: 62.5%; /*Now: 10px = 1rem*/
 }
 
-/* Vars: */
+/* VARIABLES: */
 :root {
-  --mainFont: sans-serif;
+  --mainFont: "Poppins", sans-serif;
   --borderRadius: 0.5rem;
   --borderRadiusLarge: 1.5rem;
 
@@ -35,7 +35,7 @@ p {
 }
 
 /*==========================
-GENERAL UI
+GENERAL LAYOUT
 ==========================*/
 .primary-contrast-background {
   background-color: var(--primaryContrast);
@@ -53,6 +53,29 @@ GENERAL UI
   height: 100vh;
 }
 
+/*==========================
+GENERAL UI
+==========================*/
+.selected-text {
+  color: var(--secondaryAccent);
+}
+
+.selected-area {
+  color: var(--secondaryAccent);
+}
+
+i {
+  color: var(--secondaryAccent);
+}
+
+.icon-large {
+  font-size: 2rem;
+}
+
+small {
+  font-size: 1rem;
+}
+
 /*=================== 
 HEADERS
 ===================*/
@@ -68,6 +91,13 @@ h1 {
   padding: 1rem 0;
   font-weight: bold;
   text-transform: uppercase;
+}
+
+.subheader {
+  font-size: 3rem;
+  text-transform: uppercase;
+  padding: 1rem 0;
+  font-weight: medium;
 }
 
 /*==========================
@@ -131,4 +161,41 @@ input:focus {
 .form-error {
   color: red;
   display: block;
+}
+
+/* CHOOSE MONTH COMPONENT */
+
+i {
+  cursor: pointer;
+}
+.choose-month .fa-chevron-left {
+  padding-right: 1rem;
+}
+.choose-month .fa-chevron-right {
+  padding-left: 1rem;
+}
+
+.selection-list-item {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+/* CALENDAR GRID COMPONENT */
+.calendar-grid h3 {
+  display: inline;
+}
+
+.calendar-grid .col {
+  padding: 2rem;
+}
+
+.calendar-grid sup {
+  margin-left: 0.5rem;
+}
+
+.calendar-grid th,
+.calendar-grid td {
+  border-bottom: 0.1rem solid #ddd;
+  padding: 1rem;
 }

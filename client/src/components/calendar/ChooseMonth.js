@@ -31,7 +31,7 @@ const ChooseMonth = (props) => {
   ];
 
   //Check how many months of the year remain
-  //If year> the actual year, all months must be displayed
+  //If year > the actual year, all months must be displayed
   //If the year is the actual year, only show actual month - december
   let remainingMonthOfTheYear = [];
   if (year > actualDate.getFullYear()) {
@@ -46,7 +46,11 @@ const ChooseMonth = (props) => {
   const monthOptions = remainingMonthOfTheYear.map((option, i) => {
     return (
       <div
-        className={activeMonth === option ? "row selected" : "row"}
+        className={
+          activeMonth === option && year === props.date.getFullYear()
+            ? "row selection-list-item selected-text"
+            : "row selection-list-item"
+        }
         key={i}
         onClick={() => {
           props.setDate(new Date(`${option} 1, ${year} 24:00:00`));
@@ -66,23 +70,23 @@ const ChooseMonth = (props) => {
 
   return (
     <Fragment>
-      <div className="container-fluid no-gutters">
-        <div className="row">
+      <div className="container-fluid no-gutters choose-month">
+        <div className="row align-items-center">
           {/* Only show arrow to left when selected year is larger than actual year */}
           {actualDate.getFullYear() != year && (
             <i
               onClick={() => {
                 decrementYear();
               }}
-              class="fas fa-chevron-left"
+              className="fas fa-chevron-left icon-large"
             ></i>
           )}{" "}
-          {year}{" "}
+          <h2 className="subheader">{year}</h2>{" "}
           <i
             onClick={() => {
               incrementYear();
             }}
-            class="fas fa-chevron-right"
+            className="fas fa-chevron-right icon-large"
           ></i>
         </div>
 

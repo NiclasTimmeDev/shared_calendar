@@ -12,6 +12,11 @@ const calendarSchema = new mongoose.Schema({
         ref: "users", // tells Mongoose which model to use during population (when using populate())
         required: true,
       },
+      username: {
+        type: String,
+        res: "users",
+        required: true,
+      },
     },
   ],
   openInvitation: {

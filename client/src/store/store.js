@@ -6,6 +6,7 @@ import thunk from "redux-thunk";
 import auth from "./reducers/auth";
 import alert from "./reducers/alert";
 import calendar from "./reducers/calendar";
+import calendarEvent from "./reducers/calendarEvent";
 
 const initState = {};
 
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   auth,
   alert,
   calendar,
+  calendarEvent,
 });
 
 const middleware = [thunk];

@@ -38,6 +38,8 @@ router.post(
 
     const name = req.body.name;
 
+    const user = await User.findById(req.user._id);
+
     try {
       //3:
       const existingCalendarOfUser = await Calendar.find({
@@ -55,6 +57,7 @@ router.post(
         members: [
           {
             userID: req.user._id,
+            username: user.name,
           },
         ],
       });
@@ -96,7 +99,6 @@ router.post(
     check("title", "Please enter a title").not().isEmpty(),
     check("start", "Please enter a start time").not().isEmpty(),
     check("end", "Please enter an end time").not().isEmpty(),
-    check("calendarID", "Please specify the calendarID").not().isEmpty(),
     check("to", "Please specify who the event is allocated to.")
       .not()
       .isEmpty(),
@@ -111,18 +113,19 @@ router.post(
       return res.status(400).send({ errors: errors.array });
     }
 
+    const calendar = await Calendar.findOne({
+      "members.userID": req.user._id,
+    });
+
+    if (!calendar) {
+      return res.status(404).send({ errors: [{ msg: "Calendar not found." }] });
+    }
+
     //3:
-    const {
-      start,
-      end,
-      isWholeDay,
-      wholeDayDate,
-      title,
-      notes,
-      to,
-      calendarID,
-    } = req.body;
+    const { start, end, isWholeDay, wholeDayDate, title, notes, to } = req.body;
     const from = req.user._id;
+    const calendarID = calendar._id;
+    console.log(calendarID);
 
     try {
       //4:
@@ -137,7 +140,7 @@ router.post(
         to,
         calendarID,
       });
-
+      console.log(newCalendarEvent);
       //5:
       res.status(201).send(newCalendarEvent);
       await newCalendarEvent.save();
@@ -242,6 +245,7 @@ router.get("/events/findall", auth, async (req, res) => {
     const events = await CalendarEvent.find({
       calendarID: calendar._id,
     });
+    console.log(events);
 
     //3:
     res.status(200).send(events);
@@ -442,7 +446,7 @@ router.delete("/events/delete/:event_id", auth, async (req, res) => {
     res.status(500).send({
       errors: [
         {
-          msg: "Soryy, that should not have happened. Please try again later.",
+          msg: "Sorry, that should not have happened. Please try again later.",
         },
       ],
     });
@@ -577,7 +581,7 @@ router.post("/invitation/accept/:token", auth, async (req, res) => {
     }
 
     //6:
-    calendar.members.push({ userID: req.user._id });
+    calendar.members.push({ userID: req.user._id, username: user.name });
     calendar.openInvitation = undefined;
 
     //7:
