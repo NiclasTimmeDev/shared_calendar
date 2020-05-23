@@ -99,6 +99,7 @@ router.post(
     check("title", "Please enter a title").not().isEmpty(),
     check("start", "Please enter a start time").not().isEmpty(),
     check("end", "Please enter an end time").not().isEmpty(),
+    check("date", "Please enter a date").not().isEmpty(),
     check("to", "Please specify who the event is allocated to.")
       .not()
       .isEmpty(),
@@ -122,7 +123,7 @@ router.post(
     }
 
     //3:
-    const { start, end, isWholeDay, wholeDayDate, title, notes, to } = req.body;
+    const { start, end, isWholeDay, date, title, notes, to } = req.body;
     const from = req.user._id;
     const calendarID = calendar._id;
     console.log(calendarID);
@@ -133,7 +134,7 @@ router.post(
         start,
         end,
         isWholeDay,
-        wholeDayDate,
+        date,
         title,
         notes,
         from,

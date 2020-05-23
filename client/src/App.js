@@ -27,9 +27,9 @@ function App() {
 
   return (
     <Provider store={store}>
+      <CreateEvent />
       <Router>
         <Fragment>
-          <CreateEvent />
           <Switch>
             <Route path="/login" component={Login} exact />
             <Route path="/register" component={Register} exact />

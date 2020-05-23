@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 
 const calendarEventSchema = new mongoose.Schema({
   start: {
-    type: Date,
+    type: String,
     required: true,
   },
   end: {
-    type: Date,
+    type: String,
     required: true,
   },
   isWholeDay: {
@@ -14,8 +14,9 @@ const calendarEventSchema = new mongoose.Schema({
     default: false,
     required: true,
   },
-  wholeDayDate: {
+  date: {
     type: Date,
+    required: true,
   },
   title: {
     type: String,

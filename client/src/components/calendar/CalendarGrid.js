@@ -6,6 +6,9 @@ import { connect } from "react-redux";
 import { loadMonthDates } from "./../../store/actions/calendar";
 import { loadEvents } from "./../../store/actions/calendar";
 
+//Components
+import EventDashboardItem from "./../calendarEvent/EventDashboardItem";
+
 const CalendarGrid = (props) => {
   //get all weekdays of the date that is stored in redux:
   //returns an array of moment objects that (amongst other unimportant stuff) returns a .d property. which stores a string with the date info
@@ -24,19 +27,54 @@ const CalendarGrid = (props) => {
   const currentMonthDaysFullLength = currentMonthDates.map((month, i) => {
     switch (month._d.toString().substring(0, 3)) {
       case "Mon":
-        return { number: i + 1, day: "Monday" };
+        return {
+          number: i + 1,
+          day: "Monday",
+          year: month._d.getFullYear(),
+          month: month._d.getMonth(),
+        };
       case "Tue":
-        return { number: i + 1, day: "Tuesday" };
+        return {
+          number: i + 1,
+          day: "Tuesday",
+          year: month._d.getFullYear(),
+          month: month._d.getMonth(),
+        };
       case "Wed":
-        return { number: i + 1, day: "Wednesday" };
+        return {
+          number: i + 1,
+          day: "Wednesday",
+          year: month._d.getFullYear(),
+          month: month._d.getMonth(),
+        };
       case "Thu":
-        return { number: i + 1, day: "Thursday" };
+        return {
+          number: i + 1,
+          day: "Thursday",
+          year: month._d.getFullYear(),
+          month: month._d.getMonth(),
+        };
       case "Fri":
-        return { number: i + 1, day: "Friday" };
+        return {
+          number: i + 1,
+          day: "Friday",
+          year: month._d.getFullYear(),
+          month: month._d.getMonth(),
+        };
       case "Sat":
-        return { number: i + 1, day: "Saturday" };
+        return {
+          number: i + 1,
+          day: "Saturday",
+          year: month._d.getFullYear(),
+          month: month._d.getMonth(),
+        };
       case "Sun":
-        return { number: i + 1, day: "Sunday" };
+        return {
+          number: i + 1,
+          day: "Sunday",
+          year: month._d.getFullYear(),
+          month: month._d.getMonth(),
+        };
       default:
         return;
     }
@@ -56,12 +94,22 @@ const CalendarGrid = (props) => {
               <small>{day.day}</small>
             </sup>
           </td>
-          {props.members.map((member) => {
+          {props.members.map((member, i) => {
             return (
-              <td>
-                {props.events.map((event) => {
-                  if (event.to.toString() === member.userID.toString()) {
-                    return <div>{event.start}</div>;
+              <td key={i}>
+                {props.events.map((event, i) => {
+                  const dateObj = new Date(event.date);
+                  if (
+                    event.to.toString() === member.userID.toString() &&
+                    dateObj.getFullYear() === day.year &&
+                    dateObj.getMonth() === day.month &&
+                    dateObj.getDate() === day.number
+                  ) {
+                    return (
+                      <div key={i}>
+                        <EventDashboardItem title={event.title} />
+                      </div>
+                    );
                   }
                 })}
               </td>

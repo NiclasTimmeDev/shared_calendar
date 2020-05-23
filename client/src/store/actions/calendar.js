@@ -54,11 +54,10 @@ export const loadMonthDates = (monthDates) => {
   };
 };
 
-export const loadEvents = (calendarID) => {
+export const loadEvents = () => {
   return async (dispatch) => {
     try {
       const res = await axios.get("/api/calendar/events/findall");
-      console.log(res);
       if (res.status === 200) {
         dispatch({
           type: types.EVENTS_LOADED,

@@ -23,6 +23,7 @@ html {
   --primaryContrast: #2f4858;
   --secondaryContrast: #546d79;
   --tertiaryContrast: #64e9ee;
+  --lightFontColor: #74747;
 }
 
 body {
@@ -71,9 +72,22 @@ i {
 .icon-large {
   font-size: 2rem;
 }
+.icon-xlarge {
+  font-size: 3rem;
+}
 
 small {
   font-size: 1rem;
+}
+
+.light-box {
+  z-index: 101;
+  position: absolute;
+}
+
+.explanation-text {
+  font-size: 1.8rem;
+  color: var(--lightFontColor);
 }
 
 /*=================== 
@@ -198,4 +212,92 @@ i {
 .calendar-grid td {
   border-bottom: 0.1rem solid #ddd;
   padding: 1rem;
+  min-width: 20rem;
+}
+
+/*==================  
+LIGHT-BOX
+===================*/
+.date-picker-form,
+.react-time-picker__wrapper {
+  cursor: pointer;
+  z-index: 20000;
+}
+
+.date-picker-form input,
+.react-time-picker__wrapper input {
+  display: initial !important;
+  color: var(--lightFontColor) !important;
+}
+
+.light-box-card {
+  background-color: #fff;
+  border-radius: var(--borderRadiusLarge);
+  padding: 3rem;
+}
+
+.light-box-card i {
+  margin-right: 2rem;
+}
+
+.light-box-card input {
+  border: none;
+  border-bottom: 2px solid var(--secondaryAccent);
+  font-size: 2.2rem;
+}
+
+.react-date-picker__wrapper,
+.react-time-picker__wrapper {
+  border: none !important;
+}
+
+.react-date-picker__wrapper input,
+.react-time-picker__wrapper input {
+  border-bottom: none !important;
+}
+
+.inline-children {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.checkbox {
+  display: inline-block;
+  width: inherit;
+  margin-bottom: 0;
+  border-radius: var(--borderRadius);
+  height: 1.8rem;
+  width: 1.8rem;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
+.time-picker-end {
+  margin-left: 2.5rem;
+}
+
+.light-box .btn {
+  border-bottom: none;
+  width: initial;
+}
+
+/*========================================
+EVENT DASHBOARD ITEM
+========================================*/
+.event-db-item {
+  width: 100%;
+  height: 6rem;
+  border-radius: var(--borderRadiusLarge);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  padding: 1rem;
+}
+
+.event-db-item-title {
+  font-size: 1.4rem;
+  color: var(--lightFontColor);
 }

@@ -42,24 +42,28 @@ const CalendarDashboard = (props) => {
               <div className="container-fluid">
                 <div className="row calendar-grid justify-content-center">
                   <table>
-                    <tr>
-                      <th>
-                        <h2>
-                          {props.date.toLocaleString("en-US", {
-                            month: "long",
-                          })}{" "}
-                          {props.date.getFullYear()}
-                        </h2>
-                      </th>
-                      {props.members.map((member, i) => {
-                        return (
-                          <th key={i}>
-                            <h3>{member.username}</h3>
-                          </th>
-                        );
-                      })}
-                    </tr>
-                    <CalendarGrid />
+                    <thead>
+                      <tr>
+                        <th>
+                          <h2>
+                            {props.date.toLocaleString("en-US", {
+                              month: "long",
+                            })}{" "}
+                            {props.date.getFullYear()}
+                          </h2>
+                        </th>
+                        {props.members.map((member, i) => {
+                          return (
+                            <th key={i}>
+                              <h3>{member.username}</h3>
+                            </th>
+                          );
+                        })}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <CalendarGrid />
+                    </tbody>
                   </table>
                 </div>
               </div>
