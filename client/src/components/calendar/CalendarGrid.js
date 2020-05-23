@@ -10,8 +10,11 @@ import { loadEvents } from "./../../store/actions/calendar";
 import EventDashboardItem from "./../calendarEvent/EventDashboardItem";
 
 const CalendarGrid = (props) => {
-  //get all weekdays of the date that is stored in redux:
-  //returns an array of moment objects that (amongst other unimportant stuff) returns a .d property. which stores a string with the date info
+  /*======================================
+  get all weekdays of the date that is stored in state.calendar (redux)
+  returns an array of moment objects that (amongst other unimportant stuff) returns a ._d property,
+  which stores a string with the date info.
+  ======================================*/
   const currentMonthDates = new Array(
     moment([props.date.getFullYear(), props.date.getMonth()]).daysInMonth()
   )
@@ -22,53 +25,61 @@ const CalendarGrid = (props) => {
         .add(i, "days")
     );
 
-  //the above array holds objs with the ".d" property. This one holds the important date info. The first three characters of the value of ".d" hold the weekday info
-  //This one is extracted here and mapped into a new array
+  console.log(currentMonthDates[0]._d);
+  /*====================================
+    Bring the above currentMonthDates Array into a more useful format
+    1. The above array hold objs with the ._d property, which is a Date() obj
+    2. Map over the array
+    3. Depending on the day (0=sunday, 6=Saturday)
+    4. Create new array that holds the number of the day in the month, the month and the year
+    =====================================*/
   const currentMonthDaysFullLength = currentMonthDates.map((month, i) => {
-    switch (month._d.toString().substring(0, 3)) {
-      case "Mon":
+    //3:
+    switch (month._d.getDay()) {
+      case 1:
         return {
+          //4:
           number: i + 1,
           day: "Monday",
           year: month._d.getFullYear(),
           month: month._d.getMonth(),
         };
-      case "Tue":
+      case 2:
         return {
           number: i + 1,
           day: "Tuesday",
           year: month._d.getFullYear(),
           month: month._d.getMonth(),
         };
-      case "Wed":
+      case 3:
         return {
           number: i + 1,
           day: "Wednesday",
           year: month._d.getFullYear(),
           month: month._d.getMonth(),
         };
-      case "Thu":
+      case 4:
         return {
           number: i + 1,
           day: "Thursday",
           year: month._d.getFullYear(),
           month: month._d.getMonth(),
         };
-      case "Fri":
+      case 5:
         return {
           number: i + 1,
           day: "Friday",
           year: month._d.getFullYear(),
           month: month._d.getMonth(),
         };
-      case "Sat":
+      case 6:
         return {
           number: i + 1,
           day: "Saturday",
           year: month._d.getFullYear(),
           month: month._d.getMonth(),
         };
-      case "Sun":
+      case 0:
         return {
           number: i + 1,
           day: "Sunday",
@@ -94,11 +105,22 @@ const CalendarGrid = (props) => {
               <small>{day.day}</small>
             </sup>
           </td>
+          {/* For every member, create a new td element (like a new .col element) */}
           {props.members.map((member, i) => {
             return (
               <td key={i}>
+                {/*=======================
+                Map events from redux to the right td's in the table grid
+                1. Map over all events
+                2. The date property of an event is a string. Therefore, create a new date obj that takes that string as an argument
+                3. If the event belongs to the member and has the same year, month and day as the given table cell, display an EventDashboardItem Component in it.
+                =======================*/}
+                {/* 1: */}
                 {props.events.map((event, i) => {
+                  // 2:
                   const dateObj = new Date(event.date);
+
+                  //3:
                   if (
                     event.to.toString() === member.userID.toString() &&
                     dateObj.getFullYear() === day.year &&

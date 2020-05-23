@@ -4,11 +4,17 @@ import axios from "axios";
 //other files:
 import * as types from "./../actionTypes";
 import setAlert from "./alert";
-import { bindActionCreators } from "redux";
 
+/*========================
+LOAD THE CALENDAR THE USER IS MEMBER IN
+1. Query the API (it will will find the calendar by the token that is provided in the header of the request (see ../utils/setAuthToken))
+2. Only if response is 200, put the response (calendar) in the redux state
+3. Fire the function loadEvents (see below in this file), which will load all events of this calendar
+========================*/
 export const loadCalendar = () => {
   return async (dispatch) => {
     try {
+      //1:
       const res = await axios.get("/api/calendar/find");
       if (res.status === 400) {
         setAlert("You are not a member of a calendar yet.");
@@ -16,11 +22,15 @@ export const loadCalendar = () => {
           type: types.CALENDAR_LOADED_ERROR,
         });
       }
+
+      //2:
       if (res.status === 200) {
         dispatch({
           type: types.CALENDAR_LOADED,
           payload: res.data,
         });
+
+        //3:
         dispatch(loadEvents(res.data._id));
       }
     } catch (error) {
@@ -39,12 +49,18 @@ export const loadCalendar = () => {
   };
 };
 
+/*================================
+SET DATE IN REDUX
+================================*/
 export const setDate = (date) => {
   return async (dispatch) => {
     dispatch({ type: types.SET_DATE, payload: date });
   };
 };
 
+/*================================
+STORE ALL DAYS OF A MONTH
+================================*/
 export const loadMonthDates = (monthDates) => {
   return async (dispatch) => {
     dispatch({
@@ -54,11 +70,21 @@ export const loadMonthDates = (monthDates) => {
   };
 };
 
+/*================================
+LOAD ALL EVENTS OF A CALENDAR
+1. Qeury the API (it will will find the calendar events by the token that is provided in the header of the request (see ../utils/setAuthToken))
+2. If the response code is 200, the response will be an array of objects that contain info on the specific event
+3. Store the array in redux
+================================*/
 export const loadEvents = () => {
   return async (dispatch) => {
     try {
+      //1:
       const res = await axios.get("/api/calendar/events/findall");
+
+      //2:
       if (res.status === 200) {
+        //3:
         dispatch({
           type: types.EVENTS_LOADED,
           payload: res.data,

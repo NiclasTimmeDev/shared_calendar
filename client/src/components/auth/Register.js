@@ -23,6 +23,7 @@ const Register = (props) => {
     password2: "",
   });
 
+  //set state on input field changes
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
@@ -31,9 +32,18 @@ const Register = (props) => {
     });
   };
 
+  /*==================================
+  register
+  1. Create obj with possible errors
+  2. Fill form errors, if an input isn't valid
+  3. Set state with the error-obj. That way, the errors will be presented in the frontend
+  4. Only if no errors are present, fire the register function (which comes from redux)
+  5. Redirect to calendar dashboard if user is already logged in
+  ==================================*/
   const submit = (e) => {
     e.preventDefault();
 
+    //1:
     let formErrs = {
       username: "",
       email: "",
@@ -41,6 +51,7 @@ const Register = (props) => {
       password2: "",
     };
 
+    //2:
     if (formData.username === "") {
       formErrs.username = "Please enter a username";
     }
@@ -58,6 +69,7 @@ const Register = (props) => {
       formErrs.password2 = "Please make sure that the two passwords match.";
     }
 
+    //3:
     setFormErrors({
       ...formErrors,
       username: formErrs.username,
@@ -66,6 +78,7 @@ const Register = (props) => {
       password2: formErrs.password2,
     });
 
+    //4:
     if (
       formErrors.username === "" &&
       formErrors.email === "" &&
@@ -76,6 +89,7 @@ const Register = (props) => {
     }
   };
 
+  //5:
   if (props.isAuthenticated) {
     return <Redirect to="/calendar" />;
   }

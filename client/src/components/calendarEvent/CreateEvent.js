@@ -60,11 +60,25 @@ const CreateEvent = (props) => {
     });
   };
 
+  /*==========================================
+  Submit the form to create a new event
+  1. destructure formData
+  2. "from" is the creator, i.e the logged in user
+  3. "isAllcoatedToYou" in formData is false it means, that the event is allocated to the other member of the calendar
+  In that case, filter the members array from calendar state in redux for the other user an set "to" to his/her userID
+  4. Show error if no title is provied
+
+  ==========================================*/
   const onSubmit = (e) => {
     e.preventDefault();
 
+    //1.
     const { title, date, start, end, isWholeDay, notes } = formData;
+
+    //2:
     const from = props.user._id;
+
+    //3:
     let to;
     if (formData.allocatedToYourself) {
       to = props.user._id;
@@ -74,6 +88,7 @@ const CreateEvent = (props) => {
       });
       to = otherUser[0].userID;
     }
+
     if (title !== "") {
       props.submitNewEvent(
         title,
@@ -86,14 +101,19 @@ const CreateEvent = (props) => {
         notes
       );
     }
+    //4:
+    else {
+      console.log("ERROR! No Title provided.");
+      //TODO: show error
+    }
   };
   {
+    // Show only if createEvent is true
     if (props.createEvent) {
       return (
         <Fragment>
           <Backdrop
             click={() => {
-              console.log("Backdrop clicked");
               props.interruptEventCreation();
             }}
           />
@@ -105,6 +125,7 @@ const CreateEvent = (props) => {
                     onSubmit(e);
                   }}
                 >
+                  {/* title */}
                   <input
                     type="text"
                     name="title"
@@ -118,6 +139,7 @@ const CreateEvent = (props) => {
 
                   <div>
                     <i className="fas fa-calendar-alt icon-xlarge"></i>
+                    {/* 3rd party component */}
                     <DatePicker
                       onChange={handleDateChange}
                       value={formData.date}
@@ -130,6 +152,7 @@ const CreateEvent = (props) => {
                   </div>
                   <div className="inline-children">
                     <i className="fas fa-clock icon-xlarge"></i>
+                    {/* 3rd party component */}
                     <TimePicker
                       onChange={handleStartTimeChange}
                       maxDetail="minute"
@@ -144,6 +167,7 @@ const CreateEvent = (props) => {
                       {" "}
                       -{" "}
                     </span>
+                    {/* 3rd party component */}
                     <TimePicker
                       onChange={handleEndTimeChange}
                       maxDetail="minute"
@@ -157,6 +181,7 @@ const CreateEvent = (props) => {
                   </div>
                   <div className="inline-children">
                     <i className="fas fa-user icon-xlarge"></i>
+                    {/* checkbox */}
                     <input
                       type="checkbox"
                       name="allocatedToYourself"
@@ -174,6 +199,7 @@ const CreateEvent = (props) => {
                   </div>
                   <div className="inline-children">
                     <i className="fas fa-align-left icon-xlarge"></i>
+                    {/* Notes */}
                     <input
                       type="text"
                       name="notes"
@@ -185,6 +211,7 @@ const CreateEvent = (props) => {
                       }}
                     />
                   </div>
+                  {/* submit button */}
                   <input
                     type="submit"
                     className="btn btn-primary"

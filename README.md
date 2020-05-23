@@ -28,7 +28,7 @@ Then, in a new terminal window, type:
 <pre><code>sudo npm install
 </code></pre>
 
-Then, move into the <code>/client</code> direcory. There, again run:
+Then, move into the <code>/client</code> directory. There, again run:
 
 <pre><code>sudo npm install
 </code></pre>

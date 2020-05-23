@@ -30,28 +30,42 @@ const ChooseMonth = (props) => {
     "December",
   ];
 
-  //Check how many months of the year remain
-  //If year > the actual year, all months must be displayed
-  //If the year is the actual year, only show actual month - december
+  /*=============================
+  Check how many month of the year remain
+  1. If year > the actual year, all months must be displayed
+  2. If the year is the actual year, only show actual month - december
+  =============================*/
   let remainingMonthOfTheYear = [];
+  //1:
   if (year > actualDate.getFullYear()) {
     remainingMonthOfTheYear = months;
-  } else if (year === actualDate.getFullYear())
+  }
+  //2:
+  else if (year === actualDate.getFullYear())
     for (let i = actualDate.getMonth(); i < months.length; i++) {
       remainingMonthOfTheYear.push(months[i]);
     }
 
+  /*==========================
+    Create row element for each remaining month of the year
+    1. Create row element
+    2. If the remaining month of the year is also the selected one, add another class "selected-text"
+    3. Onclick, call function from redux that changes the date in redux to the first day of the selected month
+    ==========================*/
   //For each remaining month, create a row element
   //Also, when clicking, set the date in redux to the selected date (month 1, year ,0 o'clock)
   const monthOptions = remainingMonthOfTheYear.map((option, i) => {
     return (
+      // 1:
       <div
         className={
+          //2:
           activeMonth === option && year === props.date.getFullYear()
             ? "row selection-list-item selected-text"
             : "row selection-list-item"
         }
         key={i}
+        // 3:
         onClick={() => {
           props.setDate(new Date(`${option} 1, ${year} 24:00:00`));
         }}

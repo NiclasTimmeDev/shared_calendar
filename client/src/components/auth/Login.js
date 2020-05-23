@@ -1,3 +1,4 @@
+//3rd party:
 import React, { Fragment, useState } from "react";
 import validator from "validator";
 
@@ -15,6 +16,7 @@ const Login = (props) => {
     error: "",
   });
 
+  //change state on input field changes:
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
@@ -23,10 +25,19 @@ const Login = (props) => {
     });
   };
 
+  /*=================================
+  submit form
+  1. validate form inputs
+  2. If validation fails, create error message
+  3. Only if error message is empty, fire login function (which comes from redux)
+  4. Redirect to calendar dashboard if user is authenticated
+  =================================*/
   const submit = (e) => {
     e.preventDefault();
+    //1:
     const isEmail = validator.isEmail(formData.email);
 
+    //2:
     if (!isEmail || formData.password === "") {
       setFormData({
         ...formData,
@@ -34,11 +45,13 @@ const Login = (props) => {
       });
     }
 
+    //3:
     if (formData.error === "") {
       props.login(formData.email, formData.password);
     }
   };
 
+  //4:
   if (props.isAuthenticated) {
     return <Redirect to="/calendar" />;
   }

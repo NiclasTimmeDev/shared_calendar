@@ -4,6 +4,10 @@ import setAlert from "./alert";
 
 import { loadEvents } from "./calendar";
 
+/*===========================
+SET CREATE EVENT TO true
+this is necessary in order to show the component for creating an event, as this will only show if createEvent == true
+===========================*/
 export const createNewEvent = () => {
   return async (dispatch) => {
     dispatch({
@@ -12,6 +16,12 @@ export const createNewEvent = () => {
   };
 };
 
+/*==========================================
+CREATE A NEW EVENT
+1. Send req to API with all the relevant params
+2. Only if res.status is 201, set createEvent in Redux to false
+3. Reload all calendar events
+==========================================*/
 export const submitNewEvent = (
   title,
   date,
@@ -24,6 +34,7 @@ export const submitNewEvent = (
 ) => {
   return async (dispatch) => {
     try {
+      //1:
       const res = await axios.post("/api/calendar/create/event", {
         title,
         date,
@@ -35,10 +46,13 @@ export const submitNewEvent = (
         notes,
       });
 
+      //2:
       if (res.status === 201) {
         dispatch({
           type: types.EVENT_CREATED,
         });
+
+        //3:
         dispatch(loadEvents());
       } else {
         dispatch({
