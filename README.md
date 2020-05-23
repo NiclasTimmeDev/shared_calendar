@@ -28,6 +28,11 @@ Then, in a new terminal window, type:
 <pre><code>sudo npm install
 </code></pre>
 
+Then, move into the <code>/client</code> direcory. There, again run:
+
+<pre><code>sudo npm install
+</code></pre>
+
 Next up, it is neccessary that you create a config.js file in the <strong>server/config</strong> directory.
 
 In the <strong>server/config</strong> directory, create a <strong>config.js</strong> file with the following code:
