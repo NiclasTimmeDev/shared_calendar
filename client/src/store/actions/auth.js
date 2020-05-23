@@ -47,8 +47,8 @@ Log in user
 1. Make request to API
 2. If response is not 200, display error
 3. If the HTTP response is "positive", the server will send a token. Store it in localStorage
-4. Dispatch Success action
-5. Dispatch loadUser action, which will load the user from the db by the token
+4. Dispatch loadUser action, which will load the user from the db by the token
+5. Dispatch Success action
 ==================================*/
 export const login = (email, password) => {
   return async (dispatch) => {
@@ -67,12 +67,11 @@ export const login = (email, password) => {
       localStorage.setItem("token", res.data.token);
 
       //4:
+      dispatch(loadUser());
+      //5:
       dispatch({
         type: types.AUTH_SUCCESS,
       });
-
-      //5:
-      dispatch(loadUser());
     } catch (error) {
       const errors = error.response.data.errors;
       console.log(errors);
@@ -94,7 +93,8 @@ REGISTER USER
 1. Send request to API
 2. Send error if negative response from server
 3. If success, the server will send token. Store it in localStorage
-4. Dispatch loadUser action, which will load the user from the db by the token
+4. Dispatch loadUser action, which will load the user from the db by the token.
+5. Dispatch Success action
 ================================*/
 export const register = (username, email, password) => {
   return async (dispatch) => {
@@ -115,13 +115,15 @@ export const register = (username, email, password) => {
 
       if (res.status === 201) {
         //3:
+
         localStorage.setItem("token", res.data.token);
+        //4:
+        dispatch(loadUser());
+
+        //5:
         dispatch({
           type: types.AUTH_SUCCESS,
         });
-
-        //4:
-        dispatch(loadUser());
       }
     } catch (error) {
       const errors = error.response.data.errors;

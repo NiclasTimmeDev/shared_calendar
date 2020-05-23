@@ -18,6 +18,7 @@ export const loadCalendar = () => {
       const res = await axios.get("/api/calendar/find");
       if (res.status === 400) {
         setAlert("You are not a member of a calendar yet.");
+        console.log("Here is the problem");
         return dispatch({
           type: types.CALENDAR_LOADED_ERROR,
         });

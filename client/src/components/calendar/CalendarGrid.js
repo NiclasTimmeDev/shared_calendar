@@ -25,7 +25,6 @@ const CalendarGrid = (props) => {
         .add(i, "days")
     );
 
-  console.log(currentMonthDates[0]._d);
   /*====================================
     Bring the above currentMonthDates Array into a more useful format
     1. The above array hold objs with the ._d property, which is a Date() obj
@@ -96,10 +95,19 @@ const CalendarGrid = (props) => {
 
   //Return a HTML-tr element for each entry of currentMonthDaysFullLength
   const grid = currentMonthDaysFullLength.map((day, i) => {
+    const today = new Date();
     return (
       <Fragment>
         <tr key={i}>
-          <td>
+          <td
+            className={
+              today.getFullYear() === day.year &&
+              today.getMonth() === day.month &&
+              today.getDate() === day.number
+                ? "selected-text"
+                : null
+            }
+          >
             <h3>{day.number}</h3>
             <sup>
               <small>{day.day}</small>
