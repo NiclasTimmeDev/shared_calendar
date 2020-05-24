@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from "react";
-import "./styles/App.css";
 import "./styles/bootstrap-grid.min.css";
+import "./styles/App.css";
 
 //Router
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -16,6 +16,7 @@ import Register from "./components/auth/Register";
 import CalendarDashboard from "./components/calendar/CalendarDashboard";
 import PrivateRoute from "./components/Routing/PrivateRoute";
 import CreateEvent from "./components/calendarEvent/CreateEvent";
+import Navbar from "./UI/Navbar";
 
 //utils
 import setAuthToken from "./utils/setAuthToken";
@@ -29,6 +30,7 @@ function App() {
     <Provider store={store}>
       <CreateEvent />
       <Router>
+        <Navbar />
         <Fragment>
           <Switch>
             <Route path="/login" component={Login} exact />

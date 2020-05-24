@@ -27,7 +27,7 @@ html {
 }
 
 body {
-  font-family: var(--mainFont);
+  font-family: var(--mainFont) !important;
   font-size: 1.8rem;
 }
 
@@ -90,6 +90,18 @@ small {
   color: var(--lightFontColor);
 }
 
+a {
+  text-decoration: none;
+  color: var(--tertiaryContrast);
+  cursor: pointer;
+  transition: color 0.5s;
+}
+
+a:hover {
+  color: var(--secondaryAccent);
+  transition: color 0.5s;
+}
+
 /*=================== 
 HEADERS
 ===================*/
@@ -118,7 +130,6 @@ h1 {
 BUTTONS
 ===========================*/
 .btn {
-  padding: 0.5rem;
   margin: 1rem 0;
   cursor: pointer;
   font-size: 2.2rem;
@@ -128,6 +139,13 @@ BUTTONS
   text-transform: uppercase;
   border: none;
   font-weight: bold;
+}
+
+.btn-small {
+  padding: 0.5rem;
+  font-size: 1.6rem;
+  font-weight: normal;
+  text-transform: none;
 }
 
 .btn:focus {
@@ -168,6 +186,10 @@ input {
   color: #000 !important;
 }
 
+.form-field {
+  margin-bottom: 2.5rem;
+}
+
 input:focus {
   outline: none;
 }
@@ -175,6 +197,32 @@ input:focus {
 .form-error {
   color: red;
   display: block;
+}
+.input-error {
+  border: 2px solid red !important;
+}
+
+/*=============================
+NAVBAR
+=============================*/
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 5rem;
+  background-color: var(--secondaryContrast);
+  padding: 0 1rem;
+}
+
+.navbar-nav {
+  list-style: none;
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
+.nav-item {
+  margin-left: 2rem;
 }
 
 /* CHOOSE MONTH COMPONENT */

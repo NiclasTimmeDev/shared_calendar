@@ -25,6 +25,8 @@ const CreateEvent = (props) => {
     notes: "",
   });
 
+  const [formErrors, setFormErrors] = useState({ title: false });
+
   const handleInputChange = (event) => {
     setFormData({
       ...formData,
@@ -90,6 +92,11 @@ const CreateEvent = (props) => {
     }
 
     if (title !== "") {
+      setFormErrors({
+        ...formErrors,
+        title: false,
+      });
+
       props.submitNewEvent(
         title,
         date,
@@ -103,8 +110,10 @@ const CreateEvent = (props) => {
     }
     //4:
     else {
-      console.log("ERROR! No Title provided.");
-      //TODO: show error
+      setFormErrors({
+        ...formErrors,
+        title: true,
+      });
     }
   };
   {
@@ -135,9 +144,12 @@ const CreateEvent = (props) => {
                     onChange={(e) => {
                       handleInputChange(e);
                     }}
+                    className={
+                      formErrors.title ? "form-field input-error" : "form-field"
+                    }
                   />
 
-                  <div>
+                  <div className="form-field">
                     <i className="fas fa-calendar-alt icon-xlarge"></i>
                     {/* 3rd party component */}
                     <DatePicker
@@ -150,7 +162,7 @@ const CreateEvent = (props) => {
                       name="start"
                     />
                   </div>
-                  <div className="inline-children">
+                  <div className="inline-children form-field">
                     <i className="fas fa-clock icon-xlarge"></i>
                     {/* 3rd party component */}
                     <TimePicker
@@ -179,7 +191,7 @@ const CreateEvent = (props) => {
                       amPmAriaLabel="am/pm"
                     />
                   </div>
-                  <div className="inline-children">
+                  <div className="inline-children form-field">
                     <i className="fas fa-user icon-xlarge"></i>
                     {/* checkbox */}
                     <input
@@ -197,7 +209,7 @@ const CreateEvent = (props) => {
                       Allocate to yourself
                     </span>
                   </div>
-                  <div className="inline-children">
+                  <div className="inline-children form-field">
                     <i className="fas fa-align-left icon-xlarge"></i>
                     {/* Notes */}
                     <input
