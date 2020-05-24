@@ -54,6 +54,10 @@ GENERAL LAYOUT
   height: 100vh;
 }
 
+.fixed {
+  position: fixed;
+}
+
 /*==========================
 GENERAL UI
 ==========================*/
@@ -106,7 +110,7 @@ a:hover {
 HEADERS
 ===================*/
 h1 {
-  font-size: 4rem;
+  font-size: 3.5rem;
   padding: 1rem;
   font-weight: bold;
   text-transform: uppercase;
@@ -126,6 +130,22 @@ h1 {
   font-weight: medium;
 }
 
+.hero-header {
+  width: 50%;
+  text-align: center;
+}
+
+.hero-subheader {
+  font-size: 1.6rem;
+  width: 35%;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.header-small {
+  font-size: 2rem;
+  font-weight: bold;
+}
 /*==========================
 BUTTONS
 ===========================*/
@@ -203,6 +223,15 @@ input:focus {
 }
 
 /*=============================
+IMAGES
+=============================*/
+.img-full-width-height {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/*=============================
 NAVBAR
 =============================*/
 .navbar {
@@ -229,6 +258,10 @@ NAVBAR
 
 i {
   cursor: pointer;
+}
+
+.choose-month {
+  position: fixed;
 }
 .choose-month .fa-chevron-left {
   padding-right: 1rem;
@@ -348,4 +381,38 @@ EVENT DASHBOARD ITEM
 .event-db-item-title {
   font-size: 1.4rem;
   color: var(--lightFontColor);
+}
+
+/*===========================
+LANDING PAGE
+===========================*/
+.hero-section {
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+
+.product-advertisement-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-advertisement-content .header-small {
+  width: 60%;
+  text-align: center;
+}
+
+.product-advertisement-row {
+  padding: 2rem 0;
+}
+
+.product-advertisement-img {
+  box-shadow: 0 0 1.5rem #ddd;
 }

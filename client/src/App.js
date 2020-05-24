@@ -17,6 +17,7 @@ import CalendarDashboard from "./components/calendar/CalendarDashboard";
 import PrivateRoute from "./components/Routing/PrivateRoute";
 import CreateEvent from "./components/calendarEvent/CreateEvent";
 import Navbar from "./UI/Navbar";
+import LandingPage from "./components/Landing/LandingPage";
 
 //utils
 import setAuthToken from "./utils/setAuthToken";
@@ -33,6 +34,7 @@ function App() {
         <Navbar />
         <Fragment>
           <Switch>
+            <Route path="/" component={LandingPage} exact />
             <Route path="/login" component={Login} exact />
             <Route path="/register" component={Register} exact />
             <PrivateRoute
