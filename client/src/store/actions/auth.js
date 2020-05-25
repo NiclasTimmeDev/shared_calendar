@@ -4,6 +4,11 @@ import * as types from "./../actionTypes";
 import setAlert from "./alert";
 
 /*==========================
+HELPER METHODS
+==========================*/
+import { generateErrorMsgs } from "./../../utils/helperMethods";
+
+/*==========================
 Load user from DB
 1. if token in localStorage, set it as default header in axios
 2. Send request to API
@@ -34,7 +39,7 @@ export const loadUser = () => {
         });
       }
     } catch (error) {
-      console.log(error.message);
+      generateErrorMsgs(error);
       dispatch({
         type: types.LOGIN_ERROR,
       });
@@ -73,14 +78,7 @@ export const login = (email, password) => {
         type: types.AUTH_SUCCESS,
       });
     } catch (error) {
-      const errors = error.response.data.errors;
-      console.log(errors);
-
-      if (errors) {
-        errors.forEach((errors) => {
-          setAlert(error.msg, "danger");
-        });
-      }
+      generateErrorMsgs(error);
       dispatch({
         type: types.LOGIN_ERROR,
       });
@@ -126,14 +124,7 @@ export const register = (username, email, password) => {
         });
       }
     } catch (error) {
-      const errors = error.response.data.errors;
-      console.log(errors);
-
-      if (errors) {
-        errors.forEach((errors) => {
-          setAlert(error.msg, "danger");
-        });
-      }
+      generateErrorMsgs(error);
       dispatch({
         type: types.REGISTER_ERROR,
       });

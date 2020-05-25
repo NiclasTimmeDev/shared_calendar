@@ -24,7 +24,7 @@ const CalendarDashboard = (props) => {
   if (props.authLoading) {
     return <div>Loading...</div>;
   } else {
-    //If loading is done but user is not authenticated, redirect to /login
+    //If loading is done but user is not authenticated, redirect to '/login'
     if (!props.isAuthenticated) {
       return <Redirect to="/login" />;
     }
@@ -33,6 +33,7 @@ const CalendarDashboard = (props) => {
         <div className="container-fluid">
           <div className="row">
             <div className="col-sm-3">
+              {/* Button to create new event: */}
               <button
                 onClick={() => {
                   props.createNewEvent();
@@ -41,6 +42,7 @@ const CalendarDashboard = (props) => {
               >
                 new event
               </button>
+              {/* Choose month component: */}
               <ChooseMonth />
             </div>
             <div className="col-sm-9">
@@ -69,6 +71,7 @@ const CalendarDashboard = (props) => {
                       </tr>
                     </thead>
                     <tbody>
+                      {/* Show calendar grid component on the right side of the screen: */}
                       <CalendarGrid />
                     </tbody>
                   </table>

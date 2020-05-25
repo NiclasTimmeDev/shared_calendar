@@ -5,6 +5,12 @@ import setAlert from "./alert";
 //other redux actions:
 import { loadEvents } from "./calendar";
 import { eventWasUpdated } from "./calendar";
+
+/*==========================
+HELPER METHODS
+==========================*/
+import { generateErrorMsgs } from "./../../utils/helperMethods";
+
 /*===========================
 SET CREATE EVENT TO true
 this is necessary in order to show the component for creating an event, as this will only show if createEvent == true
@@ -62,7 +68,7 @@ export const submitNewEvent = (
         setAlert("Sorry, somethin went wrong.", "danger");
       }
     } catch (error) {
-      console.log(error.message);
+      eventWasUpdated(error);
     }
   };
 };
@@ -145,14 +151,12 @@ export const submitUpdatedEvent = (event) => {
         dispatch({
           type: types.UPDATE_EVENT_ERROR,
         });
-        setAlert("Sorry, something went wrong", "danger");
       }
     } catch (error) {
-      console.log(error.message);
+      eventWasUpdated(error);
       dispatch({
         type: types.UPDATE_EVENT_ERROR,
       });
-      setAlert("Sorry, something went wrong", "danger");
     }
   };
 };

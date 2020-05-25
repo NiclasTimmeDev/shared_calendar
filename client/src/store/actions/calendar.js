@@ -5,6 +5,11 @@ import axios from "axios";
 import * as types from "./../actionTypes";
 import setAlert from "./alert";
 
+/*==========================
+HELPER METHODS
+==========================*/
+import { generateErrorMsgs } from "./../../utils/helperMethods";
+
 /*========================
 LOAD THE CALENDAR THE USER IS MEMBER IN
 1. Query the API (it will will find the calendar by the token that is provided in the header of the request (see ../utils/setAuthToken))
@@ -18,7 +23,6 @@ export const loadCalendar = () => {
       const res = await axios.get("/api/calendar/find");
       if (res.status === 400) {
         setAlert("You are not a member of a calendar yet.");
-        console.log("Here is the problem");
         return dispatch({
           type: types.CALENDAR_LOADED_ERROR,
         });
@@ -35,14 +39,7 @@ export const loadCalendar = () => {
         dispatch(loadEvents(res.data._id));
       }
     } catch (error) {
-      const errors = error.response.data.errors;
-
-      if (errors) {
-        console.log(errors);
-        errors.forEach((error) => {
-          setAlert(error.msg, "danger");
-        });
-      }
+      generateErrorMsgs(error);
       dispatch({
         type: types.CALENDAR_LOADED_ERROR,
       });
@@ -92,14 +89,7 @@ export const loadEvents = () => {
         });
       }
     } catch (error) {
-      const errors = error.response.data.errors;
-
-      if (errors) {
-        console.log(errors);
-        errors.forEach((error) => {
-          setAlert(error.msg, "danger");
-        });
-      }
+      generateErrorMsgs(error);
     }
   };
 };
