@@ -19,9 +19,13 @@ const EventDashboardItem = (props) => {
     <div
       className="event-db-item"
       style={{ backgroundColor: possibleBackgroundColors[randomInt] }}
-      onClick={props.click}
+      onClick={props.clickWrapper}
     >
       <span className="event-db-item-title">{props.title}</span>
+      <i
+        className="fas fa-edit  event-db-item-icon"
+        onClick={props.clickEditIcon}
+      ></i>
     </div>
   );
 };

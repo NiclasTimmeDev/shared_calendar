@@ -103,3 +103,16 @@ export const loadEvents = () => {
     }
   };
 };
+
+/*==============================
+UPDATE AN EVENT IN THE EVENTS ARRAY
+this function gets called in the actions file of the calendarEvents after an event was updated
+==============================*/
+export const eventWasUpdated = (event) => {
+  return async (dispatch) => {
+    dispatch({
+      type: types.EVENT_WAS_UPDATED,
+      payload: event,
+    });
+  };
+};

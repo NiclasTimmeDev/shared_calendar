@@ -40,6 +40,17 @@ const calendar = (state = initState, action) => {
         ...state,
         events: action.payload,
       };
+    case types.EVENT_WAS_UPDATED:
+      return {
+        ...state,
+        events: state.events.map((event) => {
+          if (event._id === action.payload._id) {
+            return action.payload;
+          } else {
+            return event;
+          }
+        }),
+      };
     default:
       return state;
   }

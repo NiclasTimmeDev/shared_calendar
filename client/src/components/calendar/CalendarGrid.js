@@ -5,9 +5,12 @@ import moment from "moment";
 import { connect } from "react-redux";
 import { loadMonthDates } from "./../../store/actions/calendar";
 import { loadEvents } from "./../../store/actions/calendar";
+import { updateEvent } from "./../../store/actions/calendarEvent";
+import { setCurrentEvent } from "./../../store/actions/calendarEvent";
 
 //Components
 import EventDashboardItem from "./../calendarEvent/EventDashboardItem";
+import UpdateEvent from "./../calendarEvent/UpdateEvent";
 
 const CalendarGrid = (props) => {
   /*======================================
@@ -137,7 +140,13 @@ const CalendarGrid = (props) => {
                   ) {
                     return (
                       <div key={i}>
-                        <EventDashboardItem title={event.title} />
+                        <EventDashboardItem
+                          clickEditIcon={() => {
+                            props.setCurrentEvent(event);
+                            props.updateEvent();
+                          }}
+                          title={event.title}
+                        />
                       </div>
                     );
                   }
@@ -149,14 +158,22 @@ const CalendarGrid = (props) => {
       </Fragment>
     );
   });
-
-  return grid;
+  return (
+    <Fragment>
+      {props.showUpdateEvent && <UpdateEvent />}
+      {grid}
+    </Fragment>
+  );
 };
 const mapStateToProps = (state) => ({
   date: state.calendar.date,
   events: state.calendar.events,
   members: state.calendar.members,
+  showUpdateEvent: state.calendarEvent.updateEvent,
 });
-export default connect(mapStateToProps, { loadMonthDates, loadEvents })(
-  CalendarGrid
-);
+export default connect(mapStateToProps, {
+  loadMonthDates,
+  loadEvents,
+  updateEvent,
+  setCurrentEvent,
+})(CalendarGrid);

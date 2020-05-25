@@ -299,6 +299,13 @@ i {
 /*==================  
 LIGHT-BOX
 ===================*/
+
+.light-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 .date-picker-form,
 .react-time-picker__wrapper {
   cursor: pointer;
@@ -381,6 +388,19 @@ EVENT DASHBOARD ITEM
 .event-db-item-title {
   font-size: 1.4rem;
   color: var(--lightFontColor);
+}
+
+.event-db-item-icon {
+  z-index: 100;
+  color: var(--lightFontColor);
+  font-size: 1.1rem;
+  padding: 1rem 0 1rem 1rem;
+  transition: color 0.5s;
+}
+
+.event-db-item-icon:hover {
+  color: var(--primaryAccent);
+  transition: color 0.5s;
 }
 
 /*===========================

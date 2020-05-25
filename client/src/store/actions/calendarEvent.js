@@ -2,8 +2,9 @@ import * as types from "./../actionTypes";
 import axios from "axios";
 import setAlert from "./alert";
 
+//other redux actions:
 import { loadEvents } from "./calendar";
-
+import { eventWasUpdated } from "./calendar";
 /*===========================
 SET CREATE EVENT TO true
 this is necessary in order to show the component for creating an event, as this will only show if createEvent == true
@@ -79,5 +80,79 @@ export const eventCreated = () => {
     dispatch({
       type: types.EVENT_CREATED,
     });
+  };
+};
+
+/*============================
+START UPDATING ONE EVENT
+============================*/
+export const updateEvent = () => {
+  return async (dispatch) => {
+    dispatch({
+      type: types.UPDATE_EVENT,
+    });
+  };
+};
+
+/*============================
+FINISH UPDATING ONE EVENT
+============================*/
+export const endUpdateEvent = () => {
+  return async (dispatch) => {
+    dispatch({
+      type: types.EVENT_UPDATED,
+    });
+  };
+};
+
+/*=============================
+SET THE CURRENT EVENT
+=============================*/
+export const setCurrentEvent = (event) => {
+  return async (dispatch) => {
+    dispatch({
+      type: types.SET_CURRENT_EVENT,
+      payload: event,
+    });
+  };
+};
+
+/*===========================
+INTERRUPT UPDATING AN EVENT
+===========================*/
+export const interruptUpdatingAnEvent = () => {
+  return async (dispatch) => {
+    dispatch({
+      type: types.UPDATE_EVENT_ERROR,
+    });
+  };
+};
+
+/*============================
+SEND UPDATED EVENT TO DB
+============================*/
+export const submitUpdatedEvent = (event) => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.patch("/api/calendar/events/update", event);
+      if (res.status === 200) {
+        dispatch(eventWasUpdated(res.data));
+        dispatch({
+          type: types.EVENT_UPDATED,
+          payload: res.data,
+        });
+      } else {
+        dispatch({
+          type: types.UPDATE_EVENT_ERROR,
+        });
+        setAlert("Sorry, something went wrong", "danger");
+      }
+    } catch (error) {
+      console.log(error.message);
+      dispatch({
+        type: types.UPDATE_EVENT_ERROR,
+      });
+      setAlert("Sorry, something went wrong", "danger");
+    }
   };
 };

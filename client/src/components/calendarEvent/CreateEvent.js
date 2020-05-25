@@ -39,7 +39,6 @@ const CreateEvent = (props) => {
       ...formData,
       date: date,
     });
-    console.log(formData.date);
   };
 
   const handleStartTimeChange = (time) => {

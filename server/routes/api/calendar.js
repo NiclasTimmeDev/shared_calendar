@@ -14,6 +14,15 @@ const config = require("./../../config/config");
 const router = new express.Router();
 sgMail.setApiKey(config.sendGrid_api_key);
 
+/*===================
+HELPER FUNCTIONS
+===================*/
+const findCalendarByMemberID = async (memberID) => {
+  return await Calendar.findOne({
+    "members.userID": memberID,
+  });
+};
+
 //==============================
 /* Create new calendar */
 /*
@@ -42,9 +51,8 @@ router.post(
 
     try {
       //3:
-      const existingCalendarOfUser = await Calendar.find({
-        "members.userID": req.user._id,
-      });
+      const existingCalendarOfUser = await findCalendarByMemberID(req.user._id);
+
       if (existingCalendarOfUser.length !== 0) {
         return res
           .status(400)
@@ -114,9 +122,7 @@ router.post(
       return res.status(400).send({ errors: errors.array });
     }
 
-    const calendar = await Calendar.findOne({
-      "members.userID": req.user._id,
-    });
+    const calendar = await findCalendarByMemberID(req.user._id);
 
     if (!calendar) {
       return res.status(404).send({ errors: [{ msg: "Calendar not found." }] });
@@ -164,14 +170,15 @@ router.post(
 /* Update Calendar event */
 /*
 1. find the calendar event by id and check if the requestor is the creator of that event
-2. Create an array with the fields that will be updated and elete IDs from it as these are no relevant
+2. Create an array with the fields that will be updated and delete IDs from it as these are no relevant
 3. Check that 'from' is not tried to be updated. If it is, send error message
 4. Change the respective fields of calendarEvent according to the requested changes
 5. Save to DB and send to client
 */
 //===================================
-router.patch("/events/create", auth, async (req, res) => {
+router.patch("/events/update", auth, async (req, res) => {
   try {
+    console.log(req.body);
     //1:
     const calendarEvent = await CalendarEvent.findById(
       req.body.calendarEventID
@@ -231,9 +238,8 @@ router.patch("/events/create", auth, async (req, res) => {
 router.get("/events/findall", auth, async (req, res) => {
   try {
     //1:
-    const calendar = await Calendar.findOne({
-      "members.userID": req.user._id,
-    });
+    const calendar = await findCalendarByMemberID(req.user._id);
+    console.log(calendar);
 
     //1.2
     if (!calendar) {
@@ -311,9 +317,7 @@ router.get("/events/find/:event_id", auth, async (req, res) => {
 //=====================================
 router.get("/find", auth, async (req, res) => {
   try {
-    const calendar = await Calendar.findOne({
-      "members.userID": req.user._id,
-    });
+    const calendar = await findCalendarByMemberID(req.user._id);
 
     if (!calendar) {
       return res
@@ -343,9 +347,7 @@ router.get("/find", auth, async (req, res) => {
 router.patch("/members/remove", auth, async (req, res) => {
   try {
     //1:
-    const calendar = await Calendar.findOne({
-      "members.userID": req.user._id,
-    });
+    const calendar = await findCalendarByMemberID(req.user._id);
 
     //1.2:
     if (!calendar) {
@@ -382,9 +384,7 @@ router.patch("/members/remove", auth, async (req, res) => {
 router.delete("/delete", auth, async (req, res) => {
   try {
     //1:
-    const calendar = Calendar.findOne({
-      "members.userID": req.user._id,
-    });
+    const calendar = await findCalendarByMemberID(req.user._id);
 
     //2:
     if (!calendar) {
@@ -489,9 +489,7 @@ router.post(
     }
 
     //3:
-    const calendar = await Calendar.findOne({
-      "members.userID": req.user._id,
-    });
+    const calendar = await findCalendarByMemberID(req.user._id);
 
     //4:
     if (!calendar) {
