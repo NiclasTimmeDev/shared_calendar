@@ -23,7 +23,7 @@ html {
   --primaryContrast: #2f4858;
   --secondaryContrast: #546d79;
   --tertiaryContrast: #64e9ee;
-  --lightFontColor: #74747;
+  --lightFontColor: #747474;
 }
 
 body {
@@ -80,10 +80,6 @@ i {
   font-size: 3rem;
 }
 
-small {
-  font-size: 1rem;
-}
-
 .light-box {
   z-index: 101;
   position: absolute;
@@ -104,6 +100,24 @@ a {
 a:hover {
   color: var(--secondaryAccent);
   transition: color 0.5s;
+}
+
+.small {
+  font-size: 1rem;
+  color: var(--lightFontColor) !important;
+}
+
+.no-gutter {
+  margin: 0 !important;
+}
+
+.mg-b-2 {
+  margin-bottom: 2rem !important;
+  padding-bottom: 1rem;
+}
+
+.mg-t-2 {
+  margin-top: 2rem;
 }
 
 /*=================== 
@@ -197,13 +211,14 @@ form {
 
 input {
   display: block;
-  padding: 1rem;
+  padding: 0.5rem;
   width: 100%;
   background-color: #fff;
   border: 0.1rem solid lightgray;
   border-radius: var(--borderRadius);
   margin-bottom: 1rem;
   color: #000 !important;
+  font-size: 1.8rem;
 }
 
 .form-field {
@@ -218,6 +233,12 @@ input:focus {
   color: red;
   display: block;
 }
+
+.form-error-small {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
 .input-error {
   border: 2px solid red !important;
 }

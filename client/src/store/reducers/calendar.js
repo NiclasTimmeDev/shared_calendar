@@ -23,7 +23,7 @@ const calendar = (state = initState, action) => {
         ...state,
         members: [],
         events: [],
-        loading: true,
+        loading: false,
       };
     case types.SET_DATE:
       return {

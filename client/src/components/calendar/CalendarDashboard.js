@@ -8,6 +8,7 @@ import { createNewEvent } from "./../../store/actions/calendarEvent";
 //components
 import ChooseMonth from "./ChooseMonth";
 import CalendarGrid from "./CalendarGrid";
+import CreateCalendar from "./CreateCalendar";
 
 //Routing
 import { Redirect } from "react-router-dom";
@@ -21,11 +22,13 @@ const CalendarDashboard = (props) => {
   }, [props.isAuthenticated]);
 
   //If loading the user is not yet finished (which is done in App.js whenever a view gets rendered), show loading symbol
-  if (props.authLoading) {
+  if (props.authLoading || props.calendarLoading) {
     return <div>Loading...</div>;
   } else {
     //If loading is done but user is not authenticated, redirect to '/login'
-    if (!props.isAuthenticated) {
+    if (!props.calendarLoading && props.members.length === 0) {
+      return <CreateCalendar />;
+    } else if (!props.isAuthenticated) {
       return <Redirect to="/login" />;
     }
     return (
@@ -88,7 +91,7 @@ const CalendarDashboard = (props) => {
 const mapStateToProps = (state) => ({
   members: state.calendar.members,
   events: state.calendar.events,
-  loading: state.calendar.loading,
+  calendarLoading: state.calendar.loading,
   isAuthenticated: state.auth.isAuthenticated,
   authLoading: state.auth.loading,
   date: state.calendar.date,

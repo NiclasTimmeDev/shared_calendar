@@ -53,7 +53,7 @@ router.post(
       //3:
       const existingCalendarOfUser = await findCalendarByMemberID(req.user._id);
 
-      if (existingCalendarOfUser.length !== 0) {
+      if (existingCalendarOfUser) {
         return res
           .status(400)
           .send({ errors: [{ msg: "You are already member of a calendar" }] });
@@ -71,7 +71,7 @@ router.post(
       });
 
       //5:
-      res.status(200).send(newCalendar);
+      res.status(201).send(newCalendar);
       await newCalendar.save();
     } catch (error) {
       //6:
@@ -147,7 +147,6 @@ router.post(
         to,
         calendarID,
       });
-      console.log(newCalendarEvent);
       //5:
       res.status(201).send(newCalendarEvent);
       await newCalendarEvent.save();

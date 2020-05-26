@@ -106,3 +106,24 @@ export const eventWasUpdated = (event) => {
     });
   };
 };
+
+export const createCalendar = (name) => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.post("/api/calendar/create", { name });
+      console.log(res.data);
+      if (res.status === 201) {
+        dispatch({
+          type: types.CALENDAR_LOADED,
+          payload: res.data,
+        });
+      } else {
+        dispatch({
+          type: types.CALENDAR_LOADED_ERROR,
+        });
+      }
+    } catch (error) {
+      generateErrorMsgs(error);
+    }
+  };
+};
