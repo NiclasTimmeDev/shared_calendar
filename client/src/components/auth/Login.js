@@ -25,29 +25,19 @@ const Login = (props) => {
     });
   };
 
-  /*=================================
-  submit form
-  1. validate form inputs
-  2. If validation fails, create error message
-  3. Only if error message is empty, fire login function (which comes from redux)
-  4. Redirect to calendar dashboard if user is authenticated
-  =================================*/
-  const submit = (e) => {
+  const submitLoginForm = (e) => {
     e.preventDefault();
-    //1:
+
     const isEmail = validator.isEmail(formData.email);
 
-    //2:
-    if (!isEmail || formData.password === "") {
+    if (isEmail && formData.password !== "") {
+      props.login(formData.email, formData.password);
+    } else {
+      console.log(formData);
       setFormData({
         ...formData,
-        error: "Invalid credentials.",
+        error: "Please enter a valid email address and a password.",
       });
-    }
-
-    //3:
-    if (formData.error === "") {
-      props.login(formData.email, formData.password);
     }
   };
 
@@ -65,7 +55,7 @@ const Login = (props) => {
             <form
               className="form-only"
               onSubmit={(e) => {
-                submit(e);
+                submitLoginForm(e);
               }}
             >
               <input
@@ -79,7 +69,9 @@ const Login = (props) => {
                 value={formData.email}
               />
               <small className="form-error">
-                {formData.error === "" ? props.authError : formData.error}{" "}
+                {formData.error === ""
+                  ? props.credentialsError
+                  : formData.error}{" "}
               </small>
               <input
                 onChange={(e) => {
@@ -92,7 +84,9 @@ const Login = (props) => {
                 value={formData.password}
               />
               <small className="form-error">
-                {formData.error === "" ? props.authError : formData.error}{" "}
+                {formData.error === ""
+                  ? props.credentialsError
+                  : formData.error}{" "}
               </small>
               <button type="submit" className="btn btn-primary">
                 Login
@@ -107,7 +101,7 @@ const Login = (props) => {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  authError: state.auth.authError,
+  credentialsError: state.auth.credentialsError,
 });
 
 export default connect(mapStateToProps, { login })(Login);

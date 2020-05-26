@@ -6,6 +6,7 @@ const initState = {
   loading: true,
   user: null,
   authError: "",
+  credentialsError: "",
 };
 
 const auth = (state = initState, action) => {
@@ -24,6 +25,14 @@ const auth = (state = initState, action) => {
         isAuthenticated: true,
         loading: false,
         authError: "",
+      };
+    case types.CREDENTIALS_ERROR:
+      return {
+        ...state,
+        token: null,
+        loading: false,
+        isAuthenticated: false,
+        credentialsError: action.payload,
       };
     case types.LOGIN_ERROR:
       return {

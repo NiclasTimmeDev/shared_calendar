@@ -130,7 +130,9 @@ const Register = (props) => {
                 value={formData.email}
               />
               <small className="form-error">
-                {formErrors.email === "" ? props.authError : formErrors.email}{" "}
+                {formErrors.email === ""
+                  ? props.credentialsError
+                  : formErrors.email}{" "}
               </small>
               {/* PASSWORD 1 */}
               <input
@@ -169,7 +171,7 @@ const Register = (props) => {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  authError: state.auth.authError,
+  credentialsError: state.auth.credentialsError,
 });
 
 export default connect(mapStateToProps, { register })(Register);

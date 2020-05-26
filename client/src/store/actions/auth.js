@@ -80,7 +80,8 @@ export const login = (email, password) => {
     } catch (error) {
       generateErrorMsgs(error);
       dispatch({
-        type: types.LOGIN_ERROR,
+        type: types.CREDENTIALS_ERROR,
+        payload: "Invalid credentials.",
       });
     }
   };
@@ -107,7 +108,8 @@ export const register = (username, email, password) => {
       //2:
       if (res.status === 401) {
         return dispatch({
-          type: types.REGISTER_ERROR,
+          type: types.CREDENTIALS_ERROR,
+          payload: "Sorry, this email is already taken.",
         });
       }
 
@@ -126,7 +128,8 @@ export const register = (username, email, password) => {
     } catch (error) {
       generateErrorMsgs(error);
       dispatch({
-        type: types.REGISTER_ERROR,
+        type: types.CREDENTIALS_ERROR,
+        payload: "Sorry, this email is already taken.",
       });
     }
   };
