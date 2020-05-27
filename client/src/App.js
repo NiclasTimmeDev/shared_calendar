@@ -16,12 +16,9 @@ import Register from "./components/auth/Register";
 import CalendarDashboard from "./components/calendar/CalendarDashboard";
 import PrivateRoute from "./components/Routing/PrivateRoute";
 import CreateEvent from "./components/calendarEvent/CreateEvent";
-import Navbar from "./UI/Navbar";
+import Navbar from "./components/Includes/Navbar";
 import LandingPage from "./components/Landing/LandingPage";
-import UpdateEvent from "./components/calendarEvent/UpdateEvent";
-
-//utils
-import setAuthToken from "./utils/setAuthToken";
+import Footer from "./components/Includes/Footer";
 
 function App() {
   useEffect(() => {
@@ -45,6 +42,7 @@ function App() {
             />
           </Switch>
         </Fragment>
+        <Footer />
       </Router>
     </Provider>
   );

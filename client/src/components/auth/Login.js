@@ -9,6 +9,9 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { login } from "./../../store/actions/auth";
 
+//components
+import FormGroup from "./../../UI/FormElements/FormGroup";
+
 const Login = (props) => {
   const [formData, setFormData] = useState({
     email: "",
@@ -33,7 +36,6 @@ const Login = (props) => {
     if (isEmail && formData.password !== "") {
       props.login(formData.email, formData.password);
     } else {
-      console.log(formData);
       setFormData({
         ...formData,
         error: "Please enter a valid email address and a password.",
@@ -58,39 +60,39 @@ const Login = (props) => {
                 submitLoginForm(e);
               }}
             >
-              <input
+              <FormGroup
                 onChange={(e) => {
                   handleInputChange(e);
                 }}
                 placeholder="E-Mail"
                 type="text"
                 name="email"
-                id="email"
                 value={formData.email}
+                error={formData.error !== "" || props.credentialsError !== ""}
+                errorText={
+                  formData.error === ""
+                    ? props.credentialsError
+                    : formData.error
+                }
+                description="Enter the e-mail address of your account"
               />
-              <small className="form-error">
-                {formData.error === ""
-                  ? props.credentialsError
-                  : formData.error}{" "}
-              </small>
-              <input
+              <FormGroup
                 onChange={(e) => {
                   handleInputChange(e);
                 }}
                 placeholder="Password"
                 type="password"
                 name="password"
-                id="password"
                 value={formData.password}
+                error={formData.error !== "" || props.credentialsError !== ""}
+                errorText={
+                  formData.error === ""
+                    ? props.credentialsError
+                    : formData.error
+                }
+                description="Enter your password"
               />
-              <small className="form-error">
-                {formData.error === ""
-                  ? props.credentialsError
-                  : formData.error}{" "}
-              </small>
-              <button type="submit" className="btn btn-primary">
-                Login
-              </button>
+              <input type="submit" className="btn btn-primary" value="submit" />
             </form>
           </div>
         </div>

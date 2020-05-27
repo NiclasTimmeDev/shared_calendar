@@ -8,6 +8,9 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { register } from "./../../store/actions/auth";
 
+//components
+import FormGroup from "./../../UI/FormElements/FormGroup";
+
 const Register = (props) => {
   const [formData, setFormData] = useState({
     username: "",
@@ -107,60 +110,62 @@ const Register = (props) => {
               }}
             >
               {/* USERNAME */}
-              <input
+              <FormGroup
                 onChange={(e) => {
                   handleInputChange(e);
                 }}
-                placeholder="Username"
+                placeholder="Username..."
                 type="text"
                 name="username"
-                id="username"
                 value={formData.username}
+                error={formErrors.username !== ""}
+                errorText={formErrors.username}
+                description="The name by which you will be called"
               />
-              <small className="form-error">{formErrors.username}</small>
               {/* EMAIL */}
-              <input
+              <FormGroup
                 onChange={(e) => {
                   handleInputChange(e);
                 }}
-                placeholder="E-Mail"
+                placeholder="Email..."
                 type="text"
                 name="email"
-                id="email"
                 value={formData.email}
+                error={formErrors.email !== "" || props.credentialsError !== ""}
+                errorText={
+                  formErrors.email !== ""
+                    ? formErrors.email
+                    : props.credentialsError
+                }
+                description="Your email address"
               />
-              <small className="form-error">
-                {formErrors.email === ""
-                  ? props.credentialsError
-                  : formErrors.email}{" "}
-              </small>
               {/* PASSWORD 1 */}
-              <input
+              <FormGroup
                 onChange={(e) => {
                   handleInputChange(e);
                 }}
-                placeholder="Password"
+                placeholder="Password..."
                 type="password"
                 name="password1"
-                id="password1"
                 value={formData.password1}
+                error={formErrors.password1}
+                errorText={formErrors.password1}
+                description="Your password"
               />
-              <small className="form-error">{formErrors.password1}</small>
               {/* PASSWORD 2 */}
-              <input
+              <FormGroup
                 onChange={(e) => {
                   handleInputChange(e);
                 }}
-                placeholder="Repeat password"
+                placeholder="Password..."
                 type="password"
                 name="password2"
-                id="password2"
                 value={formData.password2}
+                error={formErrors.password2}
+                errorText={formErrors.password2}
+                description="Your password"
               />
-              <small className="form-error">{formErrors.password2}</small>
-              <button type="submit" className="btn btn-primary">
-                Login
-              </button>
+              <input type="submit" className="btn btn-primary" value="submit" />
             </form>
           </div>
         </div>

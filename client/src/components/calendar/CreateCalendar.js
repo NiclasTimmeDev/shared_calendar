@@ -5,6 +5,9 @@ import validator from "validator";
 import { connect } from "react-redux";
 import { createCalendar } from "./../../store/actions/calendar";
 
+//components
+import FormGroup from "./../../UI/FormElements/FormGroup";
+
 const CreateCalendar = (props) => {
   const [formData, setFormData] = useState({
     title: "",
@@ -74,49 +77,31 @@ const CreateCalendar = (props) => {
                 onSubmitForm(e);
               }}
             >
-              <input
+              <FormGroup
                 type="text"
                 name="title"
-                className={
-                  formErrors.title === ""
-                    ? "no-gutter"
-                    : "no-gutter input-error"
-                }
                 placeholder="Title..."
+                description="Give your calendar a cool name"
+                error={formErrors.title !== ""}
+                errorText={formErrors.title}
                 value={formData.title}
                 onChange={(e) => {
                   handleInputChange(e);
                 }}
               />
-              <span className="small">Give your calendar a cool name</span>
-              {formErrors.title !== "" && (
-                <span className="form-error form-error-small">
-                  {formErrors.title}
-                </span>
-              )}
-              <input
+              <FormGroup
                 type="text"
                 name="email"
                 placeholder="Invite someone by mail..."
-                className={
-                  formErrors.email === ""
-                    ? "no-gutter"
-                    : "no-gutter input-error"
-                }
+                description="Enter the email of the person you want to share a calendar with.
+                We will send him/her an email."
+                error={formErrors.email !== ""}
+                errorText={formErrors.email}
                 value={formData.email}
                 onChange={(e) => {
                   handleInputChange(e);
                 }}
               />
-              <span className="small">
-                Enter the email of the person you want to share a calendar with.
-                We will send him/her an email.
-              </span>
-              {formErrors.email !== "" && (
-                <span className="form-error form-error-small">
-                  {formErrors.email}
-                </span>
-              )}
               <input
                 type="submit"
                 name="submit"

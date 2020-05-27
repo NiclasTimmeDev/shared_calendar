@@ -275,6 +275,21 @@ NAVBAR
   margin-left: 2rem;
 }
 
+/*=============================
+FOOTER
+=============================*/
+.footer {
+  background-color: var(--secondaryContrast);
+  padding: 4rem 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+.footer-row {
+  display: flex;
+  flex-direction: column;
+}
+
 /* CHOOSE MONTH COMPONENT */
 
 i {
