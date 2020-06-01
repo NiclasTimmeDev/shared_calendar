@@ -11,7 +11,9 @@ html {
   font-size: 62.5%; /*Now: 10px = 1rem*/
 }
 
-/* VARIABLES: */
+/*===============================
+VARIABLES
+===============================*/
 :root {
   --mainFont: "Poppins", sans-serif;
   --borderRadius: 0.5rem;
@@ -197,6 +199,17 @@ BUTTONS
   transition: all 0.3s;
 }
 
+.btn-secondary {
+  background-color: var(--secondaryAccent);
+  transition: color 0.3s;
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  filter: brightness(80%);
+  transition: all 0.3s;
+}
+
 /*================
 FORMS 
 ================*/
@@ -241,6 +254,12 @@ input:focus {
 
 .input-error {
   border: 2px solid red !important;
+}
+
+.form-lead {
+  font-size: 1.4rem;
+  color: var(--lightFontColor);
+  margin-bottom: 2rem;
 }
 
 /*=============================
@@ -290,7 +309,9 @@ FOOTER
   flex-direction: column;
 }
 
-/* CHOOSE MONTH COMPONENT */
+/*============================
+CHOOSE MONTH COMPONENT
+============================*/
 
 i {
   cursor: pointer;

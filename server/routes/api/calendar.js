@@ -537,7 +537,7 @@ router.post(
 //===========================
 /* Accept invitation to a calendar */
 /*
-1. Find the logged in user and extrac token from parameters
+1. Find the logged in user and extract token from parameters
 2. Send error if user could not be found
 3. Find the calendar where an open invitaion with the given token exists
 4. Send error if no matching calendar was found
@@ -590,6 +590,31 @@ router.post("/invitation/accept/:token", auth, async (req, res) => {
     res.status(500).send({
       errors: [{ msg: "Sorry, something went wrong. Please try again later." }],
     });
+  }
+});
+
+/*===========================================
+FIND CALENDAR BY INVITATION TOKEN
+===========================================*/
+router.get("/invitation/findcalendar", async (req, res) => {
+  try {
+    const token = req.body.token;
+    const calendar = await Calendar.findOne({ openInvitation: token });
+    if (!calendar) {
+      return res.status(404).send({ errors: [{ msg: "Calendar not found" }] });
+    }
+
+    res.status(200).send(calendar);
+  } catch (error) {
+    console.log(error.message);
+    res
+      .status(500)
+      .res.status(500)
+      .send({
+        errors: [
+          { msg: "Sorry, something went wrong. Please try again later." },
+        ],
+      });
   }
 });
 

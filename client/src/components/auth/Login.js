@@ -44,7 +44,9 @@ const Login = (props) => {
   };
 
   //4:
-  if (props.isAuthenticated) {
+  if (localStorage.invitation && props.isAuthenticated) {
+    return <Redirect to={`/invitation/accept/${localStorage.invitation}`} />;
+  } else if (props.isAuthenticated && !localStorage.invitation) {
     return <Redirect to="/calendar" />;
   }
 

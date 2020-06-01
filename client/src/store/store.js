@@ -7,6 +7,7 @@ import auth from "./reducers/auth";
 import alert from "./reducers/alert";
 import calendar from "./reducers/calendar";
 import calendarEvent from "./reducers/calendarEvent";
+import loadingSpinner from "./reducers/loadingSpinner";
 
 const initState = {};
 
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   alert,
   calendar,
   calendarEvent,
+  loadingSpinner,
 });
 
 const middleware = [thunk];

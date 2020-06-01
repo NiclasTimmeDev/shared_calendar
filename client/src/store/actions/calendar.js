@@ -127,3 +127,111 @@ export const createCalendar = (name) => {
     }
   };
 };
+
+/*===============================
+SHOW INVITATION MODAL
+===============================*/
+export const openInvitationModal = () => {
+  return async (dispatch) => {
+    dispatch({
+      type: types.SHOW_INVITATION_MODAL,
+    });
+  };
+};
+
+/*===============================
+HIDE INVITATION MODAL
+===============================*/
+export const hideInvitationModal = () => {
+  return async (dispatch) => {
+    dispatch({
+      type: types.HIDE_INVITATION_MODAL,
+    });
+  };
+};
+
+/*===============================
+SEND INVITATION TO CALENDAR
+===============================*/
+
+export const sendCalendarInvitation = (email) => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.post("/api/calendar/invitation/send", { email });
+
+      if (res.status === 200) {
+        setAlert("Invitation sent", "success");
+        dispatch({
+          type: types.HIDE_INVITATION_MODAL,
+        });
+        dispatch(loadCalendar());
+      }
+    } catch (error) {
+      generateErrorMsgs(error);
+
+      dispatch({
+        type: types.HIDE_INVITATION_MODAL,
+      });
+    }
+  };
+};
+
+/*==================================
+FIND CALENDAR BY INVITATION TOKEN
+==================================*/
+export const findCalendarByInvitationToken = (token) => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.get("/api/calendar/invitation/findcalendar", {
+        token,
+      });
+      if (res.status === 200) {
+        dispatch({
+          type: types.CALENDAR_LOADED,
+          payload: res.data,
+        });
+      } else {
+        dispatch({
+          type: types.CALENDAR_LOADED_ERROR,
+        });
+      }
+    } catch (error) {
+      generateErrorMsgs(error);
+      dispatch({
+        type: types.CALENDAR_LOADED_ERROR,
+      });
+    }
+  };
+};
+
+/*======================================
+ACCEPT CALENDAR INVITATION
+======================================*/
+export const acceptInvitation = () => {
+  return async (dispatch) => {
+    try {
+      const invitationToken = localStorage.invitation;
+      if (!invitationToken) {
+        return;
+      }
+
+      const res = await axios.post(
+        `/api/calendar/invitation/accept/${invitationToken}`
+      );
+      if (res.status !== 200) {
+        dispatch({
+          type: types.CALENDAR_LOADED_ERROR,
+        });
+      } else if (res.status === 200) {
+        dispatch(loadCalendar());
+        dispatch(loadEvents());
+        localStorage.removeItem("invitation");
+      }
+    } catch (error) {
+      generateErrorMsgs(error);
+      dispatch({
+        type: types.CALENDAR_LOADED_ERROR,
+      });
+    }
+  };
+};

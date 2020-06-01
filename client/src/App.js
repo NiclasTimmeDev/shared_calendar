@@ -19,6 +19,9 @@ import CreateEvent from "./components/calendarEvent/CreateEvent";
 import Navbar from "./components/Includes/Navbar";
 import LandingPage from "./components/Landing/LandingPage";
 import Footer from "./components/Includes/Footer";
+import InvitationModal from "./components/calendar/InvitationModal";
+import LoadingSpinner from "./UI/LoadingSpinner/LoadingSpinner";
+import AcceptInvitation from "./components/calendar/AcceptInvitation";
 
 function App() {
   useEffect(() => {
@@ -28,6 +31,8 @@ function App() {
   return (
     <Provider store={store}>
       <CreateEvent />
+      <InvitationModal />
+      <LoadingSpinner />
       <Router>
         <Navbar />
         <Fragment>
@@ -39,6 +44,10 @@ function App() {
               path="/calendar"
               component={CalendarDashboard}
               exact
+            />
+            <Route
+              path="/invitation/accept/:token"
+              component={AcceptInvitation}
             />
           </Switch>
         </Fragment>

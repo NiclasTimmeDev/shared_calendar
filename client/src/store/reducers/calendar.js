@@ -4,9 +4,11 @@ const initState = {
   calendarID: "",
   members: [],
   events: [],
+  outStandingInvitationToken: "",
   loading: true,
   date: new Date(),
   monthDates: [],
+  showInvitationModal: false,
 };
 
 const calendar = (state = initState, action) => {
@@ -16,6 +18,7 @@ const calendar = (state = initState, action) => {
         ...state,
         calendarID: action.payload._id,
         members: action.payload.members,
+        outStandingInvitationToken: action.payload.openInvitation,
         loading: false,
       };
     case types.CALENDAR_LOADED_ERROR:
@@ -50,6 +53,16 @@ const calendar = (state = initState, action) => {
             return event;
           }
         }),
+      };
+    case types.SHOW_INVITATION_MODAL:
+      return {
+        ...state,
+        showInvitationModal: true,
+      };
+    case types.HIDE_INVITATION_MODAL:
+      return {
+        ...state,
+        showInvitationModal: false,
       };
     default:
       return state;

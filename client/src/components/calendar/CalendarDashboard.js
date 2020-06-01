@@ -4,6 +4,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { loadCalendar } from "../../store/actions/calendar";
 import { createNewEvent } from "./../../store/actions/calendarEvent";
+import { openInvitationModal } from "./../../store/actions/calendar";
 
 //components
 import ChooseMonth from "./ChooseMonth";
@@ -31,6 +32,12 @@ const CalendarDashboard = (props) => {
     } else if (!props.isAuthenticated) {
       return <Redirect to="/login" />;
     }
+
+    //Start the process of inviting someone to the calendar
+    const showInvitationModal = () => {
+      props.openInvitationModal();
+    };
+
     return (
       <Fragment>
         <div className="container-fluid">
@@ -48,7 +55,9 @@ const CalendarDashboard = (props) => {
               {/* Choose month component: */}
               <ChooseMonth />
             </div>
-            <div className="col-sm-9">
+            <div
+              className={props.members.length === 1 ? "col-sm-7" : "col-sm-9"}
+            >
               <div className="container-fluid">
                 <div className="row calendar-grid justify-content-center">
                   <table>
@@ -81,6 +90,16 @@ const CalendarDashboard = (props) => {
                 </div>
               </div>
             </div>
+            {props.members.length === 1 && (
+              <div className="col-sm-2">
+                <button
+                  onClick={showInvitationModal}
+                  className="btn btn-secondary"
+                >
+                  Invite someone!
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </Fragment>
@@ -95,8 +114,11 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   authLoading: state.auth.loading,
   date: state.calendar.date,
+  showInvitationModal: state.calendar.showInvitationModal,
 });
 
-export default connect(mapStateToProps, { loadCalendar, createNewEvent })(
-  CalendarDashboard
-);
+export default connect(mapStateToProps, {
+  loadCalendar,
+  createNewEvent,
+  openInvitationModal,
+})(CalendarDashboard);
