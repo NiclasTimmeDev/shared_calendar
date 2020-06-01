@@ -134,3 +134,19 @@ export const register = (username, email, password) => {
     }
   };
 };
+
+/*=========================
+LOGOUT
+=========================*/
+export const logout = () => {
+  return async (dispatch) => {
+    try {
+      localStorage.removeItem("token");
+      dispatch({
+        type: types.LOGOUT,
+      });
+    } catch (error) {
+      generateErrorMsgs(error);
+    }
+  };
+};

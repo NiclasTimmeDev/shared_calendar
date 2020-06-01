@@ -59,6 +59,7 @@ const auth = (state = initState, action) => {
         loading: false,
         isAuthenticated: false,
         authError: "",
+        credentialsError: "",
       };
     default:
       return state;

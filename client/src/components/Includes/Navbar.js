@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
+import { logout } from "./../../store/actions/auth";
 
 const Navbar = (props) => {
   return (
@@ -26,6 +27,11 @@ const Navbar = (props) => {
               <Link to="/profile" className="nav-link">
                 Profile
               </Link>
+            </li>
+            <li className="nav-item">
+              <span onClick={props.logout} className="nav-link logout">
+                Logout
+              </span>
             </li>
           </Fragment>
         )}
@@ -52,4 +58,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps, { logout })(Navbar);
