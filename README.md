@@ -1,8 +1,17 @@
 # Documentation
 
+## A Full-Stack Javascript Web-App based on React, Node, Express and MongoDB
+
 ## What's it about?
 
 The shared calendar app is for people who want to collaboratively schedule their lifes.
+
+## Functionality
+
+- User authentication system
+- Users can create a calendar and calendar events (e.g., meetings)
+- Users can invite other users per mail to join their calendar. Invited users will receive a mail with an invitation code
+- The members of one calendar can see all events of the other member and allocate events to each other
 
 ## Tech Stack
 
